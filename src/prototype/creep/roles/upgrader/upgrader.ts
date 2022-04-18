@@ -2,28 +2,28 @@
 
 
 
-export function run_as_upgrader(this:Creep){
-    let upgrading = this.memory.upgrading||false;
+export function run_as_upgrader(creep:Creep){
+    let upgrading = creep.memory.upgrading||false;
     let err = -100;
     if(upgrading){
-        err = this.doupgrade();
+        err = creep.doupgrade();
         if(err == ERR_NOT_ENOUGH_ENERGY){
             upgrading = false;
-            this.memory.crossLevel =10;
+            creep.memory.crossLevel =10;
         }else if(err == OK){
-            this.memory.crossLevel =11;
+            creep.memory.crossLevel =11;
         }
     }
     if(!upgrading){
-        if(this.room.storage){
-            err = this.dowithdraw(this.room.storage);
-            if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[this.room.name+"onhold"]){
-                err = this.goTo(Game.flags[this.room.name+"onhold"].pos);
+        if(creep.room.storage){
+            err = creep.dowithdraw(creep.room.storage);
+            if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[creep.room.name+"onhold"]){
+                err = creep.goTo(Game.flags[creep.room.name+"onhold"].pos);
             }else if(err == ERR_FULL){
                 upgrading = true;//其实可以直接动，放着先
             }
         }
     }
-    this.memory.upgrading = upgrading;
+    creep.memory.upgrading = upgrading;
     return err;
 }

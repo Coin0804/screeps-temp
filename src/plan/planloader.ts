@@ -11,7 +11,7 @@ export const plan1:plan = {
         {
             name:"ci_transformer",
             number:1,
-            body:[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+            body:[CARRY,CARRY,MOVE],
             memory:{
                 crossLevel:12
             }
@@ -19,8 +19,8 @@ export const plan1:plan = {
         {
             name:"collector",
             number:0,
-            body:[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
-                  MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE
+            body:[CARRY,CARRY,CARRY,CARRY,
+                  MOVE,MOVE,MOVE,MOVE
             ]
         },
         {
@@ -48,14 +48,11 @@ export const plan1:plan = {
         },
         {
             name:"upgrader",
-            number:4,
-            body:[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
-                CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
-                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,
-            ],
+            number:1,
+            body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
         }
     ],
-    wall:50000
+    wall:80000
 }
 
 

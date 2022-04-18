@@ -1,5 +1,6 @@
 import { errorMapper } from './modules/errorMapper'
 import { plan1, towerPlan1 } from './plan/planloader';
+import { assignAllPrototype } from './prototype/assign';
 import { cleanMemory } from './utils/util';
 
 
@@ -8,10 +9,15 @@ const plan = plan1;
 const towerplan = towerPlan1;
 let spawnlist:SpawnItem[] = [];
 
+
 export const loop = errorMapper(() => {
+    assignAllPrototype()
+    console.log("start")
+    if(Game.cpu.bucket == 10000) Game.cpu.generatePixel();
+    console.log("p1")
     spawnlist = [];
     cleanMemory();
-
+    console.log("p2")
     for(let role of plan.workerlist){
         for(let i=0;i<role.number;i++){
             let creep = Game.creeps[role.name+(i+1)];
@@ -29,7 +35,7 @@ export const loop = errorMapper(() => {
             }
         }
     }
-
+    console.log("p3")
     if(spawnlist.length){
         let spawnItem:SpawnItem;
         let err = -13;
@@ -41,24 +47,19 @@ export const loop = errorMapper(() => {
             }
         }
     }
+    console.log("p4")
 
+    // for(let i in Creep.prototype){
+    //     console.log(i);
+    // }
     for(let name in Game.creeps){
-        // run(Game.creeps[name]);
+        const creep = Game.creeps[name]
+        // console.log(creep)
+        creep.runAs[creep.memory.role]();
     }
 
-});
+    console.log("p5")
 
-
-
-
-module.exports.loop = function () {
-    
-    
-    
-    
-    
-    
-    
     for(let id of towerPlan1.towerlist){
         let tower = Game.getObjectById(id);
         if(tower){
@@ -128,4 +129,4 @@ module.exports.loop = function () {
             // }
         }
     }
-}
+});

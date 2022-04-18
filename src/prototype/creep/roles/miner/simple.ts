@@ -1,13 +1,13 @@
 /**
  * 
  */
-export function run_as_miner(this:Creep){
-    let readyPos = this.memory.readyPos;
+export function run_as_miner(creep:Creep){
+    let readyPos = creep.memory.readyPos;
     if(!readyPos)return -10;
-    if(this.pos.x == readyPos.x && this.pos.y == readyPos.y){
-        this.domine();
+    if(creep.pos.x == readyPos.x && creep.pos.y == readyPos.y){
+        creep.domine();
     }else{
-        let target = new RoomPosition(readyPos.x,readyPos.y,this.room.name);
-        this.goTo(target,0);
+        let target = new RoomPosition(readyPos.x,readyPos.y,creep.room.name);
+        creep.goTo(target,0);
     }
 }

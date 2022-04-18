@@ -1,4 +1,4 @@
 
 interface Creep{
-    runAs:{[keys:string]:() => number}
+    runAs(role:string):number
 }

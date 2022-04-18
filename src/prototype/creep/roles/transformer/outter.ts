@@ -3,17 +3,17 @@ import {isStoreable,isWithdrawable} from "@/utils/util"
 /**
  * 
  */
-export function run_as_transformer_outter(this:Creep){
-    if(this.store.getFreeCapacity() == 0 ){
-        let target:AnyStoreStructure = isStoreable(this.memory.storeTargets,this.store.getUsedCapacity("energy"));
+export function run_as_transformer_outter(creep:Creep){
+    if(creep.store.getFreeCapacity() == 0 ){
+        let target:AnyStoreStructure = isStoreable(creep.memory.storeTargets,creep.store.getUsedCapacity("energy"));
         if(target){
-            this.dostore(target);
+            creep.dostore(target);
         }else{
-            this.goTo(Game.flags["p1"].pos);
+            creep.goTo(Game.flags["p1"].pos);
         }
     }else{
-        let target = isWithdrawable(this.memory.withdrawTargets);
-        this.dowithdraw(target);
+        let target = isWithdrawable(creep.memory.withdrawTargets);
+        creep.dowithdraw(target);
     }
     return OK;
 }

@@ -1,23 +1,24 @@
 /**
  * 
  */
-export function run_as_transformer_inner(this:Creep){
-    if(this.store.getUsedCapacity() == 0){
-        this.dowithdraw(this.room.storage);
+export function run_as_transformer_inner(creep:Creep){
+    console.log(typeof(creep))
+    if(creep.store.getUsedCapacity() == 0){
+        creep.dowithdraw(creep.room.storage);
     }else{
-        let target:AnyStoreStructure = this.pos.findClosestByRange(FIND_STRUCTURES,{
+        let target:AnyStoreStructure = creep.pos.findClosestByRange(FIND_STRUCTURES,{
             filter: (s) => {
                 let flag = (s.structureType == "spawn" || s.structureType == "extension")&& s.store.getFreeCapacity('energy') > 0;
                 // console.log(flag);
                 return flag;
             }
         });
-        if(target && this.store.getUsedCapacity(RESOURCE_ENERGY) >= 50){
-            this.dostore(target);
+        if(target && creep.store.getUsedCapacity(RESOURCE_ENERGY) >= 50){
+            creep.dostore(target);
         }else{
-            this.dowithdraw(this.room.storage);
-            if(Game.spawns["SH"].renewCreep(this) == ERR_NOT_IN_RANGE){
-                this.moveTo(Game.spawns["SH"]);
+            creep.dowithdraw(creep.room.storage);
+            if(Game.spawns["SH"].renewCreep(creep) == ERR_NOT_IN_RANGE){
+                creep.moveTo(Game.spawns["SH"]);
             }
         }
         
