@@ -60,7 +60,7 @@ export default class Worker extends MoveCreep{
      * 储存物品指定资源
      * 
      */
-    public dostore(target:AnyStoreStructure,resourceType:ResourceConstant){
+    public dostore(target:AnyStoreStructure,resourceType = RESOURCE_ENERGY){
         //先判断要放的东西是否有，免得进行多余操作
         if(this.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
         //先判断要放的东西是否还能放，免得进行多余操作
@@ -129,12 +129,13 @@ export default class Worker extends MoveCreep{
         //如果记忆中已经有了目标则直接读取
         let structure = this.memory.repairTarget ? Game.getObjectById(this.memory.repairTarget):null;
         //如果没有，或者目标已经完全不必维修，重新寻找目标
-        if(!structure || structure.hits == structure.hitsMax){
+        if(!structure || !structure.hits || structure.hits == structure.hitsMax){
             let structures = _.groupBy(this.room.find(FIND_STRUCTURES),(s) => {
                 if(s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART){
                     if(s.hits < (global.plan.wall || 250000)) return "wall";
-                }
-                if(!s.hits || s.hits < s.hitsMax*0.85) return "unhealthy";
+                }else if(s.hits && s.hits < s.hitsMax*0.85){
+                    return "unhealthy";
+                } 
                 return "healthy";
             });
             if(structures.unhealthy){
@@ -145,6 +146,7 @@ export default class Worker extends MoveCreep{
         }
         //找到目标开始维修，否则报错
         if(structure){
+            // console.log("going to repair"+structure.pos.stringify())
             this.memory.repairTarget = structure.id;//缓存
             let err:number = this.repair(structure);
             if(err == ERR_NOT_IN_RANGE){

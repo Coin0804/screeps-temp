@@ -28,8 +28,8 @@ export const plan1:plan = {
             number:2,
             body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
             memory:[
-                {source:0,readypos:{x:44,y:12}},
-                {source:1,readypos:{x:19,y:33}}
+                {source:0,readyPos:{x:44,y:12}},
+                {source:1,readyPos:{x:19,y:33}}
             ]
         },
         {

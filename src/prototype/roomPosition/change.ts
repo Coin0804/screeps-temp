@@ -22,8 +22,8 @@ export default class RoomPositionPlus extends RoomPosition{
     }
 
     directionToPos(direction:DirectionConstant){
-        let arr = this.directionToObjects(direction);
-        return new RoomPositionPlus(this.x+arr[0],this.y+arr[1],this.roomName);
+        let obj = this.directionToObjects(direction);
+        return new RoomPosition(this.x+obj.x,this.y+obj.y,this.roomName);
     }
 
 

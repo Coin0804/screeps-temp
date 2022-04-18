@@ -19,6 +19,6 @@ const roles={
 
 export class WorketInRole extends Worker{
     runAs(role:string){
-        return roles[role](this);
+        return roles[role](this)
     }
 }

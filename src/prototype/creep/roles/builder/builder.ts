@@ -13,7 +13,7 @@ export function run_as_builder(creep:Creep){
             building =false;
             creep.memory.crossLevel =10;
         }else if(err == ERR_NOT_FOUND){
-            err = creep.runAs['repairman']();//之后会被任务系统替代
+            err = creep.runAs('repairman');//之后会被任务系统替代
         }
     }
     if(!building){

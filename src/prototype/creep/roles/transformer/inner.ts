@@ -2,7 +2,7 @@
  * 
  */
 export function run_as_transformer_inner(creep:Creep){
-    console.log(typeof(creep))
+    // console.log(creep.name+"ready");
     if(creep.store.getUsedCapacity() == 0){
         creep.dowithdraw(creep.room.storage);
     }else{
@@ -13,12 +13,14 @@ export function run_as_transformer_inner(creep:Creep){
                 return flag;
             }
         });
+        // if(target)console.log(target.id);
         if(target && creep.store.getUsedCapacity(RESOURCE_ENERGY) >= 50){
             creep.dostore(target);
         }else{
+            // console.log(creep.name);
             creep.dowithdraw(creep.room.storage);
             if(Game.spawns["SH"].renewCreep(creep) == ERR_NOT_IN_RANGE){
-                creep.moveTo(Game.spawns["SH"]);
+                creep.goTo(Game.spawns["SH"].pos);
             }
         }
         
