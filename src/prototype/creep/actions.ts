@@ -8,7 +8,7 @@ import MoveCreep from "./go.js";
  * creep的各项行动，挂载到creep原型
  * 
  */
-export class Worker extends MoveCreep{
+export default class Worker extends MoveCreep{
     /**
      * 捡起掉落物
      * 因为掉落物要贴脸才能捡，所以应该没有效率的问题

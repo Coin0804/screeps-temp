@@ -5,7 +5,7 @@ interface Creep{
     // 使用压缩数据移动
     goByPath():CreepMoveReturnCode | ERR_NO_PATH | ERR_NOT_IN_RANGE | ERR_INVALID_TARGET
     // 通用移动
-    goTo(target:RoomPosition,range:number):CreepMoveReturnCode | ERR_NO_PATH | ERR_NOT_IN_RANGE | ERR_INVALID_TARGET
+    goTo(target:RoomPosition,range?:number):CreepMoveReturnCode | ERR_NO_PATH | ERR_NOT_IN_RANGE | ERR_INVALID_TARGET
     // 请求对穿
     requestCross(direction:DirectionConstant):OK | ERR_BUSY | ERR_NOT_FOUND
     // 处理对穿

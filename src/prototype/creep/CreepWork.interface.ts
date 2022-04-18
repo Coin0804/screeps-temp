@@ -16,5 +16,11 @@ interface CreepMemory{
     //挖矿目标
     source?: number
     //
-    role:string
+    role?:string
+    //
+    building?:boolean
+    //
+    repairing?:boolean
+    //
+    upgrading?:boolean
 }
