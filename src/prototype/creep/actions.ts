@@ -168,7 +168,7 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
-    public dowithdraw(target:AnyStoreStructure,resourceType = RESOURCE_ENERGY){
+    public dowithdraw(target:AnyStoreStructure|Ruin|Tombstone,resourceType = RESOURCE_ENERGY){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
         //先判断要取的东西是否有，免得进行多余操作
@@ -180,7 +180,7 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
-    public dowithdrawAll(target:AnyStoreStructure){
+    public dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity() == 0) return ERR_FULL;
         //数组化，目的是排序

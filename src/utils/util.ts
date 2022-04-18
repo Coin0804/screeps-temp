@@ -1,10 +1,10 @@
 
 
-export function isWithdrawable(withdrawTargets,floor = 0){
+export function isWithdrawable(withdrawTargets:Id<AnyStoreStructure|Ruin|Tombstone>[],floor = 0){
     if(withdrawTargets){
         for(let id of withdrawTargets){
             let target = Game.getObjectById(id);
-            if(target.store["energy"] > floor){
+            if(target.store[RESOURCE_ENERGY] > floor){
                 return target;
             }
         }
@@ -12,7 +12,7 @@ export function isWithdrawable(withdrawTargets,floor = 0){
     return null;
 }
 
-export function isStoreable(storeTargets,amount){
+export function isStoreable(storeTargets:Id<AnyStoreStructure>[],amount:number){
     if(storeTargets){
         for(let id of storeTargets){
             let target = Game.getObjectById(id);
@@ -24,7 +24,7 @@ export function isStoreable(storeTargets,amount){
     return null;
 }
 
-export function serializeFarPath(positions,position0){
+export function serializeFarPath(positions:RoomPosition[],position0:RoomPosition){
     if (positions.length == 0) return '';
     // 确保路径里第一个位置是自己当前的位置
     if (!positions[0].isEqualTo(position0)) positions.splice(0,0,position0);
@@ -39,8 +39,8 @@ export function serializeFarPath(positions,position0){
     }).join('');
 }
 
-export function getOppositeDirection(direction){
-    return ((direction + 3) % 8 + 1);
+export function getOppositeDirection(direction:DirectionConstant){
+    return <DirectionConstant>((direction + 3) % 8 + 1);
 }
 
 export function store2Array(store){
@@ -53,7 +53,7 @@ export function store2Array(store){
 
 export function clearMemory(){
     //过于暴力还没测试
-    Memory = {};
+    // Memory = {};
     Memory.creeps = {};
 }
 
