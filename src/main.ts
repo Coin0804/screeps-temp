@@ -12,9 +12,12 @@ let spawnlist:SpawnItem[] = [];
 
 global.plan = plan
 export const loop = errorMapper(() => {
-    
-    console.log("————start————")
-    if(Game.cpu.bucket == 10000) Game.cpu.generatePixel();
+    const ticks = Game.time;
+    if(!(ticks%1000))console.log(`${ticks}`);
+    if(Game.cpu.bucket == 10000){
+        Game.cpu.generatePixel();
+        console.log("good, get a pixel.");
+    } 
     // console.log("p1")
     spawnlist = [];
     cleanMemory();
@@ -65,7 +68,7 @@ export const loop = errorMapper(() => {
         let tower = Game.getObjectById(id);
         if(tower){
             let targets = tower.room.find(FIND_HOSTILE_CREEPS,{
-                filter:t => {return tower.pos.getRangeTo(t) < 12;}
+                filter:t => {return tower.pos.getRangeTo(t) <= 15;}
             });
             if(targets.length){
                 let enemies = _.groupBy(targets,(c) =>{
