@@ -1,6 +1,6 @@
 type SpawnProperties = {
     memory:any,
-    direction?:DirectionConstant
+    directions?:DirectionConstant[]
 }
 
 type SpawnItem = {

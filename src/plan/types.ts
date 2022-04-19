@@ -7,7 +7,7 @@ type Plan = {
             body:BodyPartConstant[],
             birthSpawn?:number,
             memory?:any,
-            direction?:DirectionConstant
+            directions?:DirectionConstant[]
         }[]
     }[]
     mianSpawn?:number

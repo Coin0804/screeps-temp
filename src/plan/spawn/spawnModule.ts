@@ -24,7 +24,7 @@ export function checkWorkers(){
                         memory.role = role.name;
                         //装填参数
                         let properties:SpawnProperties = {memory:memory};
-                        if(role.direction) properties.direction = role.direction;
+                        if(role.directions) properties.directions = role.directions;
                         //推送进入列表
                         let spawnItem:SpawnItem = {
                             room:room.name,
@@ -52,6 +52,9 @@ export function doSpawn(){
         while(err != OK && spawnlist.length){
             spawnItem = spawnlist.shift();
             if(spawnItem.name == 'E36N53_transformer_2')console.log(spawnItem.properties.memory);
+            for(let i in spawnItem.properties){
+                console.log(i,spawnItem.properties[i]);
+            }
             err = Game.spawns["SH"].spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
             
             // if(err == 0){//备用，不知道为什么之前记忆打不上

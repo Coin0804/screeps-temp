@@ -37,6 +37,12 @@ export const plan1:Plan = {
                     ]
                 },
                 {
+                    name:"ce_transformer",
+                    number:1,
+                    body:[CARRY],
+                    directions:[BOTTOM]
+                },
+                {
                     name:"builder",
                     number:1,
                     body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
