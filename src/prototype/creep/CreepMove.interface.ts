@@ -33,15 +33,17 @@ interface CreepMemory{
     // 爬虫绕过房间列表
     bypassRooms?: string[]
     // 对穿等级
-    crossLevel?:number
+    crossLevel?: number
     // 目标shard
-    targetShard?:string
+    targetShard?: string
     // 跨shard穿过的portalRoom
-    protalRoom?:string
+    protalRoom?: string
     // 不允许对穿
-    standed?:boolean
+    standed?: boolean
     // 禁用自己对穿
-    disableCross?:boolean
+    disableCross?: boolean
+    //
+    team?: number
 }
 // declare module NodeJS {
 //     // 全局对象

@@ -8,6 +8,8 @@ import { run_as_transformer_outter } from "./transformer/outter";
 import { run_as_transformer_inner } from "./transformer/inner";
 import { run_as_transformer_central } from "./transformer/central";
 import { run_as_miner_linked } from "./miner/linked";
+import { run_as_colonizer } from "./claimer/colonizer";
+import { run_as_builder_out } from "./claimer/outbuilder";
 
 const roles={
     builder:run_as_builder,
@@ -18,7 +20,9 @@ const roles={
     transformer:run_as_transformer_outter,
     ci_transformer:run_as_transformer_inner,
     ce_transformer:run_as_transformer_central,
-    link_miner:run_as_miner_linked
+    link_miner:run_as_miner_linked,
+    colonizer:run_as_colonizer,
+    o_bulider:run_as_builder_out
 }
 
 export class WorketInRole extends Worker{

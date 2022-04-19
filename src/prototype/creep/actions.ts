@@ -119,6 +119,19 @@ export default class Worker extends MoveCreep{
         return ERR_NOT_FOUND;
     }
 
+    public dobuildAt(pos:RoomPosition){
+        //先判断能量是否还有，免得进行多余操作
+        if(this.store.getUsedCapacity(RESOURCE_ENERGY) == 0) return ERR_NOT_ENOUGH_ENERGY;
+        //查看该点
+        if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
+        let constructionSite = this.room.lookAt(pos).filter((s) => s.type == LOOK_CONSTRUCTION_SITES)[0].constructionSite;
+        let err:number = this.build(constructionSite);
+        if(err == ERR_NOT_IN_RANGE){
+            err = this.goTo(constructionSite.pos);
+        }
+        return err;
+    }
+
     /**
      * 进行维修
      * 总感觉哪里不对
@@ -204,5 +217,61 @@ export default class Worker extends MoveCreep{
             }
             if(err ==OK) return err;
         }
+    }
+
+    public doclaim(controller:StructureController){
+        let err:number = this.claimController(controller);
+        if(err == ERR_NOT_IN_RANGE){
+            err = this.goTo(controller.pos);
+        }
+        return err;
+    }
+
+    public doreserve(controller:StructureController){
+        let err:number = this.reserveController(controller);
+        if(err == ERR_NOT_IN_RANGE){
+            err = this.goTo(controller.pos);
+        }
+        return err;
+    }
+
+    searchAndCollecte(){
+        let resource = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        if(resource && resource.amount > 100){
+            return this.dopickup(resource);
+        }else{
+            let tombstone = this.pos.findClosestByRange(FIND_TOMBSTONES,{
+                    filter: t => {
+                        return t.store.getUsedCapacity() > 0;
+                    }
+                });
+            if(tombstone){
+                return this.dowithdraw(tombstone);
+            }else{
+                let ruin = this.pos.findClosestByRange(FIND_RUINS,{
+                    filter: r => {
+                        return r.store.getUsedCapacity() > 0;
+                    }
+                });
+                if(ruin){
+                    return this.dowithdraw(ruin);
+                }else{
+                    return this.dostoreAll(this.room.storage);
+                }
+            }
+        }
+    }
+
+
+    withdrawInStorage(){
+        this.memory.crossLevel =10;
+        if(this.room.storage){
+            let err = this.dowithdraw(this.room.storage);
+            if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[this.room.name+"onhold"]){
+                err = this.goTo(Game.flags[this.room.name+"onhold"].pos);
+            }
+            return err
+        }
+        return ERR_NOT_FOUND;
     }
 }
