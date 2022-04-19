@@ -51,10 +51,10 @@ export function doSpawn(){
         let spawnItem:SpawnItem;
         while(err != OK && spawnlist.length){
             spawnItem = spawnlist.shift();
-            if(spawnItem.name == 'E36N53_transformer_2')console.log(spawnItem.properties.memory);
-            for(let i in spawnItem.properties){
-                console.log(i,spawnItem.properties[i]);
-            }
+            // if(spawnItem.name == 'E36N53_transformer_2')console.log(spawnItem.properties.memory);
+            // for(let i in spawnItem.properties){
+            //     // console.log(i,spawnItem.properties[i]);
+            // }
             err = Game.spawns["SH"].spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
             
             // if(err == 0){//备用，不知道为什么之前记忆打不上

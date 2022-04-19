@@ -52,7 +52,7 @@ export default class MoveCreep extends Creep{
         // 确认目标没有变化，如果变化了就重新规划路线 //缓存也是
         const targetPos = target.stringify();
         if ((targetPos !== this.memory.moveData.targetPos)|| !this.memory.moveData.path){
-            console.log('path changed,tring again.'+this.name);
+            // console.log('path changed,tring again.'+this.name);
             this.memory.moveData.targetPos = targetPos;
             this.memory.moveData.path = this.findPath(target,range);
         }

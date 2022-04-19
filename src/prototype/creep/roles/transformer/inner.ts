@@ -15,7 +15,7 @@ export function run_as_transformer_inner(creep:Creep){
         });
         // if(target)console.log(target.id);
         if(target && creep.store.getUsedCapacity(RESOURCE_ENERGY) >= 50){
-            console.log('s');
+            // console.log('s');
             creep.dostore(target);
         }else{
             // console.log(creep.name);
