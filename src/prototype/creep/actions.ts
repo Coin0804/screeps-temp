@@ -126,7 +126,7 @@ export default class Worker extends MoveCreep{
     public dorepair(){
         //先判断能量是否还有，免得进行多余操作
         if(this.store.getUsedCapacity(RESOURCE_ENERGY) == 0){
-            this.memory.repairTarget = null;//没能量了解绑对象 不知道为什么没成功
+            // this.memory.repairTarget = null;//没能量了解绑对象 不知道为什么没成功
             return ERR_NOT_ENOUGH_ENERGY;
         } 
         //如果记忆中已经有了目标则直接读取
@@ -147,6 +147,8 @@ export default class Worker extends MoveCreep{
             }else if(structures.wall){
                 structure = this.pos.findClosestByRange(structures.wall);
                 console.log("going to repair"+structure.pos.stringify()+"because it's wall")
+            }else{
+                structure = null;
             }
         }
         //找到目标开始维修，否则报错
@@ -159,6 +161,7 @@ export default class Worker extends MoveCreep{
             }
             return err;
         }
+        this.memory.repairTarget = null;//否则解绑记忆
         return ERR_INVALID_TARGET;
     }
     
