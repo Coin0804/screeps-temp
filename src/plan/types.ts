@@ -17,3 +17,8 @@ type Plan = {
 type TowerPlan = {
     towerlist:Id<StructureTower>[]
 }
+
+type LinkPlan = {
+    floor?: number
+    pairs:{from:Id<StructureLink>,to:Id<StructureLink>}[]
+}

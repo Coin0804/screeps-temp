@@ -1,5 +1,6 @@
 import { errorMapper } from './modules/errorMapper'
-import { plan1, towerPlan1 } from './plan/planloader';
+import { doTransferLink } from './plan/link/linkModule';
+import { linkPlan1, plan1, towerPlan1 } from './plan/planloader';
 import { checkWorkers, doSpawn } from './plan/spawn/spawnModule';
 import { assignAllPrototype } from './prototype/assign';
 import { cleanMemory, getPixel } from './utils/util';
@@ -13,9 +14,11 @@ import { runTowerDefence } from './war/defence/tower';
  */
 const golbalResetTime = Game.time;
 console.log("重载代码或global重置，等待初始化:");
+console.log(`总计消耗cpu${Game.cpu.getUsed()}`);
 console.log("——载入计划表——");
 global.plan = plan1;
 global.towerplan = towerPlan1;
+global.linkplan = linkPlan1;
 console.log(`载入完成！总计消耗cpu${Game.cpu.getUsed()}`);
 console.log("——挂载所有原型——");
 assignAllPrototype()
@@ -61,6 +64,8 @@ export const loop = errorMapper(() => {
         const creep = Game.creeps[name]
         if(creep.memory.role) creep.runAs(creep.memory.role);
     }
+
+    doTransferLink();
 
     // 先用着吧
     runTowerDefence();

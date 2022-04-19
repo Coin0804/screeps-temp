@@ -5,7 +5,7 @@ import {isStoreable,isWithdrawable} from "@/utils/util"
  */
 export function run_as_transformer_outter(creep:Creep){
     // console.log(creep.name+"ready");
-    if(creep.store.getFreeCapacity() == 0 ){
+    if(creep.store.getFreeCapacity() <= creep.store.getCapacity()*0.2){
         // console.log(creep.name+"going to store");
         let target:AnyStoreStructure = isStoreable(creep.memory.storeTargets,creep.store.getUsedCapacity("energy"));
         if(target){

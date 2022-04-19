@@ -29,4 +29,6 @@ interface CreepMemory{
     storeTargets?:Id<AnyStoreStructure>[]
     //
     withdrawTargets?:Id<AnyStoreStructure | Ruin | Tombstone>[]
+    //
+    linkfloor?: number
 }

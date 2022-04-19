@@ -7,6 +7,7 @@ import { run_as_miner } from "./miner/simple";
 import { run_as_transformer_outter } from "./transformer/outter";
 import { run_as_transformer_inner } from "./transformer/inner";
 import { run_as_transformer_central } from "./transformer/central";
+import { run_as_miner_linked } from "./miner/linked";
 
 const roles={
     builder:run_as_builder,
@@ -16,7 +17,8 @@ const roles={
     miner:run_as_miner,
     transformer:run_as_transformer_outter,
     ci_transformer:run_as_transformer_inner,
-    ce_transformer:run_as_transformer_central
+    ce_transformer:run_as_transformer_central,
+    link_miner:run_as_miner_linked
 }
 
 export class WorketInRole extends Worker{
