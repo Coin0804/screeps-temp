@@ -22,7 +22,7 @@ const roles={
     ce_transformer:run_as_transformer_central,
     link_miner:run_as_miner_linked,
     colonizer:run_as_colonizer,
-    o_bulider:run_as_builder_out
+    o_builder:run_as_builder_out
 }
 
 export class WorketInRole extends Worker{

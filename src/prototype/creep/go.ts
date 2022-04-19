@@ -12,8 +12,11 @@ export default class MoveCreep extends Creep{
         const fontCreep = (fontPos.lookFor(LOOK_CREEPS)[0] || fontPos.lookFor(LOOK_POWER_CREEPS)[0]);
         if (!fontCreep) return ERR_NOT_FOUND;
         if (fontCreep.owner.username != this.owner.username) return;
-        if (fontCreep.manageCross(direction,this.memory.crossLevel)) this.move(direction);
-        return OK;
+        if (fontCreep.manageCross(direction,this.memory.crossLevel)){
+            this.move(direction);
+            return OK;
+        }
+        return ERR_BUSY;
     }
 
     public manageCross(direction:DirectionConstant,crossLevel:number){
@@ -48,8 +51,8 @@ export default class MoveCreep extends Creep{
         if (!this.memory.moveData) this.memory.moveData = {index:0};
         // 确认目标没有变化，如果变化了就重新规划路线 //缓存也是
         const targetPos = target.stringify();
-        if ((targetPos !== this.memory.moveData.targetPos) || !this.memory.moveData.path){
-            // console.log('path changed,tring again.');
+        if ((targetPos !== this.memory.moveData.targetPos)|| !this.memory.moveData.path){
+            console.log('path changed,tring again.'+this.name);
             this.memory.moveData.targetPos = targetPos;
             this.memory.moveData.path = this.findPath(target,range);
         }
@@ -63,7 +66,7 @@ export default class MoveCreep extends Creep{
         const goResult = this.goByPath();
         // 如果发生撞停或者参数异常，说明缓存可能存在问题，移除缓存
         if (goResult === ERR_INVALID_TARGET){
-            // console.log('error happend,clear data.');
+            console.log('error happend,clear data.'+this.name);
             delete this.memory.moveData;
             const pathKey = `${this.pos.stringify()} ${target.stringify()}`;
             if(global.pathCache[pathKey]) delete global.pathCache[pathKey];

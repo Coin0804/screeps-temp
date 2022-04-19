@@ -8,13 +8,14 @@ export function run_as_transformer_inner(creep:Creep){
     }else{
         let target:AnyStoreStructure = creep.pos.findClosestByRange(FIND_STRUCTURES,{
             filter: (s) => {
-                let flag = (s.structureType == "spawn" || s.structureType == "extension")&& s.store.getFreeCapacity('energy') > 0;
+                let flag = (s.structureType == "spawn" || s.structureType == "extension" || s.structureType == "tower")&& s.store.getFreeCapacity('energy') > 0;
                 // console.log(flag);
                 return flag;
             }
         });
         // if(target)console.log(target.id);
         if(target && creep.store.getUsedCapacity(RESOURCE_ENERGY) >= 50){
+            console.log('s');
             creep.dostore(target);
         }else{
             // console.log(creep.name);

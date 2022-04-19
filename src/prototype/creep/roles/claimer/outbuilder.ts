@@ -15,8 +15,9 @@ function yellowFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
+        if(err != OK) err = creep.domine();
         //todo
-        if(err == ERR_FULL){
+        if(creep.store.getFreeCapacity() == 0){
             building = true;//其实可以直接动，放着先
             creep.memory.crossLevel =10;
         }
@@ -41,8 +42,9 @@ function redFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
+        if(err != OK) err = creep.domine();
         //todo
-        if(err == ERR_FULL){
+        if(creep.store.getFreeCapacity() == 0){
             building = true;//其实可以直接动，放着先
             creep.memory.crossLevel =10;
         }
@@ -54,7 +56,7 @@ function redFarBuild(creep:Creep,flag:Flag){
 export function run_as_builder_out(creep:Creep){
     //行动前检查
     let team = creep.memory.team;
-    if(!team) return ERR_INVALID_TARGET;
+    if(!team) return creep.goTo(Game.flags['aim'].pos);
     let flag = Game.flags['build'+team];
     if(!flag) return creep.goTo(Game.flags['aim'].pos);
     switch(flag.color){

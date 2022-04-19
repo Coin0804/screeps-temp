@@ -12,7 +12,7 @@ function moveAndReserve(creep:Creep,flag:Flag){
 
 export function run_as_colonizer(creep:Creep){
     let team = creep.memory.team;
-    if(!team) return ERR_INVALID_TARGET;
+    if(!team) return creep.goTo(Game.flags['aim'].pos);
     let flag = Game.flags['colonize'+team];
     if(!flag) return creep.goTo(Game.flags['aim'].pos);
     switch(flag.color){

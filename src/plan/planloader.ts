@@ -6,7 +6,7 @@ export const plan1:Plan = {
                 {
                     name:"ci_transformer",
                     number:1,
-                    body:[CARRY,CARRY,MOVE],
+                    body:[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],
                     memory:{
                         crossLevel:12
                     }
@@ -49,7 +49,10 @@ export const plan1:Plan = {
                     name:"ce_transformer",
                     number:1,
                     body:[CARRY,CARRY,CARRY],
-                    directions:[BOTTOM]
+                    directions:[BOTTOM],
+                    memory:{
+                        standed:true
+                    }
                 },
                 {
                     name:"builder",

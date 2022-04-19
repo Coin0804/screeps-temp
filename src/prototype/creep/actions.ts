@@ -38,6 +38,7 @@ export default class Worker extends MoveCreep{
         //看看房间对不对
         if(this.room.controller && this.room.controller){
             let err = this.upgradeController(this.room.controller);
+            if(err == OK) this.memory.crossLevel =11;
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(this.room.controller.pos,3);
             }else if(dush){//未测试，就硬挤
@@ -86,7 +87,7 @@ export default class Worker extends MoveCreep{
         let array = store2Array(this.store);
         for(const r of array){
             //先判断要放的东西是否还能放，免得进行多余操作
-            if(target.store.getFreeCapacity(r.resourceType) > 0){
+            if(target && target.store.getFreeCapacity(r.resourceType) > 0){
                 let err = this.transfer(target,r.resourceType);
                 if(err == ERR_NOT_IN_RANGE){
                     err = this.goTo(target.pos);
@@ -124,10 +125,11 @@ export default class Worker extends MoveCreep{
         if(this.store.getUsedCapacity(RESOURCE_ENERGY) == 0) return ERR_NOT_ENOUGH_ENERGY;
         //查看该点
         if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
-        let constructionSite = this.room.lookAt(pos).filter((s) => s.type == LOOK_CONSTRUCTION_SITES)[0].constructionSite;
-        let err:number = this.build(constructionSite);
+        let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_CONSTRUCTION_SITES)[0];
+        if(!result) return ERR_NOT_FOUND;
+        let err:number = this.build(result.constructionSite);
         if(err == ERR_NOT_IN_RANGE){
-            err = this.goTo(constructionSite.pos);
+            err = this.goTo(result.constructionSite.pos);
         }
         return err;
     }
@@ -183,7 +185,12 @@ export default class Worker extends MoveCreep{
      */
     public domine(){
         //待优化
-        let source = this.room.find(FIND_SOURCES)[this.memory.source];
+        let source:Source;
+        if(this.memory.source){
+            source = this.room.find(FIND_SOURCES)[this.memory.source];
+        }else{
+            source = this.pos.findClosestByRange(FIND_SOURCES);
+        }
         let err:number = this.harvest(source);
         if(err == ERR_NOT_IN_RANGE){
             err = this.goTo(source.pos);
