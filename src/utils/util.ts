@@ -65,3 +65,10 @@ export function cleanMemory(){
         }
     }
 }
+
+export function getPixel(){
+    if(Game.cpu.bucket == 10000 && !global.stopGeneratePixel){
+        Game.cpu.generatePixel();
+        console.log("好耶，又有一个Pixcel咯");
+    }
+}

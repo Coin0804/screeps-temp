@@ -1,5 +1,7 @@
 import {getOppositeDirection,serializeFarPath} from '../../utils/util.js'
-
+/**
+ * 可移动的creep，挂载到Creep原型
+ */
 export default class MoveCreep extends Creep{
     public requestCross(direction:DirectionConstant){
         if (!this.memory.crossLevel) this.memory.crossLevel = 10;    // 10为默认对穿等级

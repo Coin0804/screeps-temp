@@ -1,136 +1,68 @@
 import { errorMapper } from './modules/errorMapper'
 import { plan1, towerPlan1 } from './plan/planloader';
+import { checkWorkers, doSpawn } from './plan/spawn/spawnModule';
 import { assignAllPrototype } from './prototype/assign';
-import { cleanMemory } from './utils/util';
+import { cleanMemory, getPixel } from './utils/util';
+import { runTowerDefence } from './war/defence/tower';
 
-const plan = plan1;
-const towerplan = towerPlan1;
+
+
+/**
+ * 初始化
+ * 因为不在errorMapper里，即使报错也不会有映射
+ */
+const golbalResetTime = Game.time;
+console.log("重载代码或global重置，等待初始化:");
+console.log("——载入计划表——");
+global.plan = plan1;
+global.towerplan = towerPlan1;
+console.log(`载入完成！总计消耗cpu${Game.cpu.getUsed()}`);
+console.log("——挂载所有原型——");
 assignAllPrototype()
+console.log(`挂载完成！总计消耗cpu${Game.cpu.getUsed()}`);
 
-
-let spawnlist:SpawnItem[] = [];
-
-global.plan = plan
+/**
+ * 主循环，每个tick会执行一次
+ * 被errorMapper包装过
+ * 所以会显示报错
+ * 而且不会受到垃圾邮件！
+ */
 export const loop = errorMapper(() => {
-    const ticks = Game.time;
-    if(!(ticks%1000))console.log(`${ticks}`);
-    if(Game.cpu.bucket == 10000){
-        Game.cpu.generatePixel();
-        console.log("good, get a pixel.");
-    } 
-    // console.log("p1")
-    spawnlist = [];
-    cleanMemory();
-    // console.log("p2")
-    for(let role of plan.workerlist){
-        for(let i=0;i<role.number;i++){
-            let creep = Game.creeps[role.name+(i+1)];
-            if(!creep){
-                if(spawnlist.length < 50) {
-                    let m = role.memory ? (role.memory[i]?role.memory[i]:role.memory): {};
-                    m.role = role.name;
-                    let spawnItem:SpawnItem = {body:role.body,name:role.name+(i+1),memory:m};
-                    spawnlist.push(spawnItem);
-                }
-            }else{
-                if(creep.memory.role != role.name){
-                    creep.memory.role = role.name;
-                }
-            }
-        }
+    //运行时间等于当前时间减去global重置时间
+    const ticks = Game.time - golbalResetTime;
+    /**
+     * 每100个tick执行一次
+     * 这些任务不必每次都做
+     */
+    if(!(ticks%100)){
+        console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
+        cleanMemory();//回收没用的creep记忆
     }
-    // console.log("p3")
-    if(spawnlist.length){
-        let spawnItem:SpawnItem;
-        let err = -13;
-        while(err != 0 && spawnlist.length){
-            spawnItem = spawnlist.shift();
-            err = Game.spawns["SH"].spawnCreep(spawnItem.body,spawnItem.name);
-            if(err == 0){
-                Memory.creeps[spawnItem.name] = spawnItem.memory;
-            }
-        }
-    }
-    // console.log("p4")
-
-    // for(let i in Creep.prototype){
-    //     console.log(i);
-    // }
+    //压缩cpu
+    getPixel();
+    //清空待孵化列表
+    global.spawnlist = [];
+    /**
+     * 暂行，待优化
+     * 监控worker的生存状态
+     * 没有的话按照计划的优先级推送孵化任务
+     * 目前每tick都推
+     * TODO:之后会被孪生制取代
+     */
+    checkWorkers();
+    /**
+     * 处理孵化任务，待优化
+     */
+    doSpawn();
+    /**
+     * 运行creep
+     */
     for(let name in Game.creeps){
         const creep = Game.creeps[name]
-        // console.log(creep)
-        creep.runAs(creep.memory.role);
+        if(creep.memory.role) creep.runAs(creep.memory.role);
     }
 
-    // console.log("p5")
-
-    for(let id of towerPlan1.towerlist){
-        let tower = Game.getObjectById(id);
-        if(tower){
-            let targets = tower.room.find(FIND_HOSTILE_CREEPS,{
-                filter:t => {return tower.pos.getRangeTo(t) <= 15;}
-            });
-            if(targets.length){
-                let enemies = _.groupBy(targets,(c) =>{
-                    let parts = _.groupBy(c.body,p => {
-                       return p.hits>0 ? p.type : 'damaged';
-                    });
-                    
-                    if(parts[HEAL] && parts[HEAL].length > 5){
-                        console.log('find a healer!');
-                        return 'healer';
-                    }else if(( (parts[ATTACK] && parts[ATTACK].length > 5) || (parts[RANGED_ATTACK] && parts[RANGED_ATTACK].length > 5)) && tower.pos.getRangeTo(c)<=5){
-                        console.log('dangerous attacker come colse!');
-                        return 'dangerous'
-                    }
-                    return 'normal';
-                });
-                if(enemies['healer']) {
-                    let target = tower.pos.findClosestByRange(enemies['healer'],{
-                        filter:(t:Creep) => {return tower.pos.getRangeTo(t) < 8;}
-                    });
-                    tower.attack(target);
-                }else if(enemies['dangerous']){
-                    let target = tower.pos.findClosestByRange(enemies['dangerous']);
-                    tower.attack(target);
-                }else{
-                    let target = tower.pos.findClosestByRange(enemies['normal']);
-                    tower.attack(target);
-                }
-            }else{
-                targets = tower.room.find(FIND_MY_CREEPS,{
-                    filter:t => {return t.hits < t.hitsMax;}
-                });
-                if(targets.length){
-                    tower.heal(targets[0]);
-                }
-            }
-            
-            
-            // var RT;
-            // var repair_area = tp1.tl[t].repair_area;
-            // var structures = tower.room.find(FIND_STRUCTURES)
-            // for(let i in structures){
-            //     RT = structures[i];
-                
-            //     if(RT.pos.x >= repair_area[0] && RT.pos.x <= repair_area[2]){
-            //      if(RT.pos.y >= repair_area[1] && RT.pos.y <= repair_area[3]){
-            //       if(RT.hits <RT.hitsMax){
-            //       let isr = RT.structureType == "rampart" ;
-            //       let isw = RT.structureType == "constructedWall";
-            //       if((isr || isw)&& RT.hits < 10000){
-            //         tower.repair(RT);
-            //       }
-            //       }
-            //      }
-            //     }
-            // }
-            // var closestDamagedStructure = tower.pos.findClosestByRange(, {
-            //     filter: (structure) => structure.hits < structure.hitsMax
-            // });
-            // if(closestDamagedStructure) {
-            //     tower.repair(closestDamagedStructure);
-            // }
-        }
-    }
+    // 先用着吧
+    runTowerDefence();
+    
 });

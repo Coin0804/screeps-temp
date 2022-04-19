@@ -19,6 +19,7 @@ const roles={
 
 export class WorketInRole extends Worker{
     runAs(role:string){
-        return roles[role](this)
+        if(roles[role])return (roles[role](this));
+        return -100;
     }
 }
