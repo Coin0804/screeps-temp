@@ -111,7 +111,7 @@ export default class MoveCreep extends Creep{
         }
         
         const result = PathFinder.search(this.pos,{pos:target,range:range},{
-            plainCost:2,swampCost:10,maxOps:target.roomName == this.room.name?300:8000,
+            plainCost:2,swampCost:10,maxOps:target.roomName == this.room.name?1000:8000,
             roomCallback: (roomName) => {
                 // if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false;// 在全局绕过房间列表的房间 false
                 // if (this.memory.bypassRooms && this.memory.bypassRooms.includes(roomName)) return false;// 在爬虫记忆绕过房间列表的房间 false
@@ -144,7 +144,7 @@ export default class MoveCreep extends Creep{
                     if (( cl1 && cl2 && cl1 < cl2 ) || creep.memory.standed){
                         costs.set(creep.pos.x,creep.pos.y,255);
                     }else{
-                        costs.set(creep.pos.x,creep.pos.y,2);
+                        costs.set(creep.pos.x,creep.pos.y,3);
                     }
                 });
                 return costs;

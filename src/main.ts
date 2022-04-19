@@ -1,3 +1,4 @@
+import { loadTemp1API } from './API/temp1';
 import { errorMapper } from './modules/errorMapper'
 import { doTransferLink } from './plan/link/linkModule';
 import { linkPlan1, plan1, towerPlan1 } from './plan/planloader';
@@ -21,8 +22,9 @@ global.towerplan = towerPlan1;
 global.linkplan = linkPlan1;
 console.log(`载入完成！总计消耗cpu${Game.cpu.getUsed()}`);
 console.log("——挂载所有原型——");
-assignAllPrototype()
+assignAllPrototype();
 console.log(`挂载完成！总计消耗cpu${Game.cpu.getUsed()}`);
+loadTemp1API();
 
 /**
  * 主循环，每个tick会执行一次
@@ -37,9 +39,10 @@ export const loop = errorMapper(() => {
      * 每100个tick执行一次
      * 这些任务不必每次都做
      */
-    if(!(ticks%100)){
+    if(!(ticks%50)){
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
+        // global.API.createOutBuilder("c"+Game.time);
     }
     //压缩cpu
     getPixel();

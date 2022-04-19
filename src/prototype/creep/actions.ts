@@ -36,7 +36,7 @@ export default class Worker extends MoveCreep{
         //先判断能量是否还有，免得进行多余操作
         if(this.store.getUsedCapacity(RESOURCE_ENERGY) == 0) return ERR_NOT_ENOUGH_ENERGY;
         //看看房间对不对
-        if(this.room.controller && this.room.controller){
+        if(this.room.controller && this.room.controller.my){
             let err = this.upgradeController(this.room.controller);
             if(err == OK) this.memory.crossLevel =11;
             if(err == ERR_NOT_IN_RANGE){
@@ -65,7 +65,7 @@ export default class Worker extends MoveCreep{
         //先判断要放的东西是否有，免得进行多余操作
         if(this.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
         //先判断要放的东西是否还能放，免得进行多余操作
-        if(target.store.getFreeCapacity(resourceType) > 0){
+        if(target && target.store.getFreeCapacity(resourceType) > 0){
             let err = this.transfer(target,resourceType);
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(target.pos);
@@ -243,6 +243,8 @@ export default class Worker extends MoveCreep{
     }
 
     searchAndCollecte(){
+        //先判断背包是否已满，免得进行多余操作
+        if(this.store.getFreeCapacity() == 0) return ERR_FULL;
         let resource = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         if(resource && resource.amount > 100){
             return this.dopickup(resource);
@@ -263,7 +265,10 @@ export default class Worker extends MoveCreep{
                 if(ruin){
                     return this.dowithdraw(ruin);
                 }else{
-                    return this.dostoreAll(this.room.storage);
+                    let enimyStructure = this.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_TERMINAL})
+                    if(enimyStructure)return this.dowithdraw(<StructureTerminal>enimyStructure);
+
+                    return ERR_NOT_FOUND;
                 }
             }
         }
@@ -274,6 +279,13 @@ export default class Worker extends MoveCreep{
         this.memory.crossLevel =10;
         if(this.room.storage){
             let err = this.dowithdraw(this.room.storage);
+            if(err == OK) return err;
+        }
+        let container:StructureContainer = this.pos.findClosestByRange(FIND_STRUCTURES,{filter:
+            (s) => s.structureType == STRUCTURE_CONTAINER && s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
+        });
+        if(container) {
+            let err = this.dowithdraw(container);
             if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[this.room.name+"onhold"]){
                 err = this.goTo(Game.flags[this.room.name+"onhold"].pos);
             }

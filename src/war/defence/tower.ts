@@ -3,9 +3,7 @@ export function runTowerDefence(){
     for(let id of global.towerplan.towerlist){
         let tower = Game.getObjectById(id);
         if(tower){
-            let targets = tower.room.find(FIND_HOSTILE_CREEPS,{
-                filter:t => {return tower.pos.getRangeTo(t) <= 15;}
-            });
+            let targets = tower.room.find(FIND_HOSTILE_CREEPS);
             if(targets.length){
                 let enemies = _.groupBy(targets,(c) =>{
                     let parts = _.groupBy(c.body,p => {

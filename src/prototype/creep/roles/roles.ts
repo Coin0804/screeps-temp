@@ -10,6 +10,7 @@ import { run_as_transformer_central } from "./transformer/central";
 import { run_as_miner_linked } from "./miner/linked";
 import { run_as_colonizer } from "./claimer/colonizer";
 import { run_as_builder_out } from "./claimer/outbuilder";
+import { run_as_upgrader_special } from "./upgrader/special";
 
 const roles={
     builder:run_as_builder,
@@ -22,7 +23,8 @@ const roles={
     ce_transformer:run_as_transformer_central,
     link_miner:run_as_miner_linked,
     colonizer:run_as_colonizer,
-    o_builder:run_as_builder_out
+    o_builder:run_as_builder_out,
+    s_upgrader:run_as_upgrader_special
 }
 
 export class WorketInRole extends Worker{

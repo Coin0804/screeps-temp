@@ -1,7 +1,7 @@
 export const plan1:Plan = {
     roomlist:[
         {
-            name:'E36N53',
+            name:'E36N52',
             workerlist:[
                 {
                     name:"ci_transformer",
@@ -66,9 +66,26 @@ export const plan1:Plan = {
                 }
             ]
         },//第一个房间
-        // {
-            
-        // }
+        {
+            name:'E37N51',
+            workerlist:[
+                {
+                    name:"collector",
+                    number:3,
+                    body:[WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+                {
+                    name:"s_upgrader",
+                    number:10,
+                    body:[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+                {
+                    name:"repairman",
+                    number:1,
+                    body:[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+            ]
+        }
     ],
     wall:80000
 }

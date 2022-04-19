@@ -55,7 +55,9 @@ export function doSpawn(){
             // for(let i in spawnItem.properties){
             //     // console.log(i,spawnItem.properties[i]);
             // }
-            err = Game.spawns["SH"].spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
+            console.log(spawnItem.room);
+            const spawn = Game.rooms[spawnItem.room].find(FIND_MY_SPAWNS)[spawnItem.birthSpawn?spawnItem.birthSpawn:0];
+            err = spawn.spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
             
             // if(err == 0){//备用，不知道为什么之前记忆打不上
             //     Memory.creeps[spawnItem.name] = spawnItem.memory;
