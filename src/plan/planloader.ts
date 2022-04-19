@@ -56,12 +56,12 @@ export const plan1:Plan = {
                 },
                 {
                     name:"builder",
-                    number:1,
+                    number:2,
                     body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
                 },
                 {
                     name:"upgrader",
-                    number:1,
+                    number:2,
                     body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
                 }
             ]

@@ -39,6 +39,7 @@ export default class Worker extends MoveCreep{
         if(this.room.controller && this.room.controller.my){
             let err = this.upgradeController(this.room.controller);
             if(err == OK) this.memory.crossLevel =11;
+            else this.memory.crossLevel =10;
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(this.room.controller.pos,3);
             }else if(dush){//未测试，就硬挤
@@ -244,7 +245,7 @@ export default class Worker extends MoveCreep{
 
     searchAndCollecte(){
         //先判断背包是否已满，免得进行多余操作
-        if(this.store.getFreeCapacity() == 0) return ERR_FULL;
+        if(this.store.getFreeCapacity() <= 50) return ERR_FULL;
         let resource = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         if(resource && resource.amount > 100){
             return this.dopickup(resource);

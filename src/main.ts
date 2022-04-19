@@ -39,10 +39,12 @@ export const loop = errorMapper(() => {
      * 每100个tick执行一次
      * 这些任务不必每次都做
      */
-    if(!(ticks%50)){
+    if(!(ticks%100)){
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
-        // global.API.createOutBuilder("c"+Game.time);
+    }
+    if(!(ticks%1000)){
+        global.API.createOutBuilder("c"+Game.time);
     }
     //压缩cpu
     getPixel();

@@ -1,3 +1,4 @@
+import { run_as_repairman } from "../repairman/repairman";
 
 function yellowFarBuild(creep:Creep,flag:Flag){
     //没到过去先
@@ -10,7 +11,8 @@ function yellowFarBuild(creep:Creep,flag:Flag){
         if(err == ERR_NOT_ENOUGH_ENERGY){
             building =false;
         }else if(err == ERR_NOT_FOUND){
-            err = creep.goTo(flag.pos);
+            if(creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) err = run_as_repairman(creep);
+            if(err != OK) err = creep.goTo(flag.pos);
         }
     }
     if(!building){
