@@ -92,7 +92,7 @@ export const plan1:Plan = {
 
 
 export const towerPlan1:TowerPlan = {
-    towerlist:[<Id<StructureTower>>"62559c94dd2d666398c06c85"]
+    towerlist:[<Id<StructureTower>>"62559c94dd2d666398c06c85",<Id<StructureTower>>"6257e90c2056ad2824f23937"]
 }
 
 export const linkPlan1:LinkPlan = {
