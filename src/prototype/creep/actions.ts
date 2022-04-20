@@ -203,7 +203,7 @@ export default class Worker extends MoveCreep{
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
         //先判断要取的东西是否有，免得进行多余操作
-        if(target.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
+        if(!target || target.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
         let err = this.withdraw(target,resourceType);
         if(err == ERR_NOT_IN_RANGE){
             err = this.goTo(target.pos);
@@ -218,7 +218,7 @@ export default class Worker extends MoveCreep{
         let array = store2Array(target.store);
         for(const r of array){
             //先判断要取的东西是否有，免得进行多余操作
-            if(target.store.getUsedCapacity(r.resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
+            if(!target || target.store.getUsedCapacity(r.resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
             let err = this.withdraw(target,r.resourceType);
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(target.pos);

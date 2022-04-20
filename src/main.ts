@@ -43,7 +43,7 @@ export const loop = errorMapper(() => {
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
     }
-    if(!(ticks%1000)){
+    if(!(ticks%1500)){
         global.API.createOutBuilder("c"+Game.time);
     }
     //压缩cpu

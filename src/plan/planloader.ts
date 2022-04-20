@@ -6,7 +6,10 @@ export const plan1:Plan = {
                 {
                     name:"ci_transformer",
                     number:1,
-                    body:[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],
+                    body:[
+                        CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,CARRY,CARRY,MOVE
+                    ],
                     memory:{
                         crossLevel:12
                     }
@@ -56,13 +59,29 @@ export const plan1:Plan = {
                 },
                 {
                     name:"builder",
-                    number:2,
-                    body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+                    number:1,
+                    body:[
+                        WORK,WORK,WORK,
+                        WORK,WORK,WORK,
+                        CARRY,CARRY,CARRY,
+                        CARRY,CARRY,CARRY,
+                        MOVE,MOVE,MOVE,
+                        MOVE,MOVE,MOVE,
+                        MOVE,MOVE,MOVE,
+                        MOVE,MOVE,MOVE
+                    ],
                 },
                 {
                     name:"upgrader",
-                    number:2,
-                    body:[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+                    number:4,
+                    body:[
+                        WORK,WORK,WORK,WORK,WORK,
+                        WORK,WORK,WORK,WORK,WORK,
+                        WORK,WORK,WORK,WORK,WORK,
+                        CARRY,CARRY,CARRY,CARRY,CARRY,
+                        MOVE,MOVE,MOVE,MOVE,MOVE,
+                        MOVE,MOVE,MOVE,MOVE,MOVE
+                    ],
                 }
             ]
         },//第一个房间
@@ -70,19 +89,47 @@ export const plan1:Plan = {
             name:'E37N51',
             workerlist:[
                 {
-                    name:"collector",
-                    number:3,
-                    body:[WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    name:"ci_transformer",
+                    number:1,
+                    body:[
+                        CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,CARRY,CARRY,MOVE
+                    ],
+                    memory:{
+                        crossLevel:12
+                    }
                 },
                 {
-                    name:"s_upgrader",
-                    number:10,
-                    body:[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    name:"miner",
+                    number:1,
+                    body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
+                    memory:[
+                        {source:1,readyPos:{x:17,y:21}},
+                        {source:1,readyPos:{x:19,y:33}}
+                    ]
+                },
+                {
+                    name:"collector",
+                    number:3,
+                    body:[CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE],
+                },
+                {
+                    name:"upgrader",
+                    number:5,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
                 },
                 {
                     name:"repairman",
                     number:1,
-                    body:[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+                {
+                    name:"s_upgrader",
+                    number:0,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    memory:{
+                        crossLevel:12
+                    }
                 },
             ]
         }
@@ -92,7 +139,10 @@ export const plan1:Plan = {
 
 
 export const towerPlan1:TowerPlan = {
-    towerlist:[<Id<StructureTower>>"62559c94dd2d666398c06c85",<Id<StructureTower>>"6257e90c2056ad2824f23937"]
+    towerlist:[
+        <Id<StructureTower>>"62559c94dd2d666398c06c85",<Id<StructureTower>>"6257e90c2056ad2824f23937",
+        <Id<StructureTower>>"625f6c727e57d60e9b91cbfc"
+    ]
 }
 
 export const linkPlan1:LinkPlan = {

@@ -5,7 +5,7 @@ export function run_as_upgrader_special(creep:Creep){
     let upgrading = creep.memory.upgrading||false;
     let err = -100;
     if(upgrading){
-        err = creep.doupgrade();
+        err = creep.doupgrade(true);
         // if(creep.name == 'E36N53_upgrader_1')console.log(err+"a");
         if(err == ERR_NOT_ENOUGH_ENERGY){
             upgrading = false;

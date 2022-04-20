@@ -4,7 +4,7 @@
 export function run_as_transformer_inner(creep:Creep){
     // console.log(creep.name+"ready");
     if(creep.store.getUsedCapacity() == 0){
-        creep.dowithdraw(creep.room.storage);
+        creep.withdrawInStorage();
     }else{
         let target:AnyStoreStructure = creep.pos.findClosestByRange(FIND_STRUCTURES,{
             filter: (s) => {
@@ -19,9 +19,10 @@ export function run_as_transformer_inner(creep:Creep){
             creep.dostore(target);
         }else{
             // console.log(creep.name);
-            creep.dowithdraw(creep.room.storage);
-            if(Game.spawns["SH"].renewCreep(creep) == ERR_NOT_IN_RANGE){
-                creep.goTo(Game.spawns["SH"].pos);
+            creep.withdrawInStorage();
+            let spawn = creep.room.find(FIND_MY_SPAWNS)[0];
+            if(spawn && (spawn.renewCreep(creep) == ERR_NOT_IN_RANGE)){
+                creep.goTo(spawn.pos);
             }
         }
         

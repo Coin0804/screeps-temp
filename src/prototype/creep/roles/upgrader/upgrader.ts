@@ -5,7 +5,7 @@ export function run_as_upgrader(creep:Creep){
     let upgrading = creep.memory.upgrading||false;
     let err = -100;
     if(upgrading){
-        err = creep.doupgrade();
+        err = creep.doupgrade(true);
         console.log(err+" "+creep.name);
         if(err == ERR_NOT_ENOUGH_ENERGY){
             upgrading = false;

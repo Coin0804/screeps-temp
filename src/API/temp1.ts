@@ -15,4 +15,9 @@ export function loadTemp1API(){
     global.API.createCollector = function(name:string){
         return Game.spawns["SH"].spawnCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{memory:{role:"collector"}});
     }
+    global.API.sellPixel = function(price:number,amount:number){
+        return Game.market.createOrder({type:ORDER_SELL,resourceType:PIXEL,price:price,totalAmount:amount});
+    }
+    // let creep:Creep;
+    // creep.signController()
 }
