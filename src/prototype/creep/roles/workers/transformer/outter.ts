@@ -14,7 +14,7 @@ export function run_as_transformer_outter(creep:Creep){
         }else{
             let flag = Game.flags[creep.room.name+"onhold"];
             // console.log("can't store");
-            if(flag)return creep.goTo(Game.flags["p1"].pos);
+            if(flag)return creep.goTo(Game.flags["aim"].pos);
             return ERR_NOT_FOUND;
         }
     }else{

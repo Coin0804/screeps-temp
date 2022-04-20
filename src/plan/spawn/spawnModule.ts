@@ -73,7 +73,11 @@ export function checkReverser(){
     }
 }
 
-
+export function checkMineKeeper(){
+    for(let minekeeper of global.outMinePlan.guards){
+        load(minekeeper);
+    }
+}
 
 export function doSpawn(){
     if(global.spawnlist.length){

@@ -1,3 +1,4 @@
+import { autoTreadEnergy } from "@/tread/temp";
 
 export function loadTemp1API(){
     if(!global.API)global.API = {};
@@ -18,6 +19,7 @@ export function loadTemp1API(){
     global.API.sellPixel = function(price:number,amount:number){
         return Game.market.createOrder({type:ORDER_SELL,resourceType:PIXEL,price:price,totalAmount:amount});
     }
+    global.API.test1 = autoTreadEnergy;
     // let creep:Creep;
     // creep.signController()
 }

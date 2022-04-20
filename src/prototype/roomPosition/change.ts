@@ -23,6 +23,7 @@ export default class RoomPositionPlus extends RoomPosition{
 
     directionToPos(direction:DirectionConstant){
         let obj = this.directionToObjects(direction);
+        if( this.x+obj.x>49 || this.x+obj.x<0 || this.y+obj.y>49 || this.y+obj.y<0) return null;
         return new RoomPosition(this.x+obj.x,this.y+obj.y,this.roomName);
     }
 

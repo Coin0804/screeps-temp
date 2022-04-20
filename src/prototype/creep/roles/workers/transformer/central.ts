@@ -20,6 +20,8 @@ export function run_as_transformer_central(creep:Creep){
         }else if(err != 0){
             return creep.dowithdraw(creep.room.storage);
         }
+    }else if(err != 0 && terminal.store.getUsedCapacity(RESOURCE_ENERGY) > 10000){
+        err = creep.dowithdraw(terminal);
     }
     return creep.dostoreAll(creep.room.storage);
 

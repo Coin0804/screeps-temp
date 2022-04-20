@@ -2,8 +2,9 @@ import { loadTemp1API } from './API/temp1';
 import { errorMapper } from './modules/errorMapper'
 import { doTransferLink } from './plan/link/linkModule';
 import { linkPlan1, outMinePlan1, plan1, towerPlan1 } from './plan/planloader';
-import { checkOuters, checkReverser, checkWorkers, doSpawn } from './plan/spawn/spawnModule';
+import { checkMineKeeper, checkOuters, checkReverser, checkWorkers, doSpawn } from './plan/spawn/spawnModule';
 import { assignAllPrototype } from './prototype/assign';
+import { autoTreadEnergy } from './tread/temp';
 import { cleanMemory, getPixel } from './utils/util';
 import { runTowerDefence } from './war/defence/tower';
 
@@ -43,6 +44,7 @@ export const loop = errorMapper(() => {
     if(!(ticks%100)){
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
+        autoTreadEnergy();
     }
     
     //压缩cpu
@@ -56,9 +58,12 @@ export const loop = errorMapper(() => {
      * 目前每tick都推
      * TODO:之后会被孪生制取代
      */
-    checkReverser();
-    checkOuters();
+    if(Game.rooms["E37N52"] && Game.rooms["E37N52"].find(FIND_HOSTILE_CREEPS).length == 0){
+        checkReverser();
+        checkOuters();
+    }
     checkWorkers();
+    checkMineKeeper();
     /**
      * 处理孵化任务，待优化
      */

@@ -87,7 +87,7 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"upgrader",
-                    number:4,
+                    number:3,
                     body:[
                         WORK,WORK,WORK,WORK,WORK,
                         WORK,WORK,WORK,WORK,WORK,
@@ -150,8 +150,8 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"upgrader",
-                    number:0,
-                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    number:1,
+                    body:[WORK,CARRY,MOVE],
                     memory:{
                         crossLevel:12
                     }
@@ -220,7 +220,11 @@ export const outMinePlan1:OutMinePlan = {
             rolename:'minekeeper',
             team:1,
             body:[
-                WORK
+                WORK,WORK,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,
+                HEAL,HEAL,HEAL,
+                RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK
             ]
         }
     ]
