@@ -7,7 +7,7 @@ export function run_as_repairman(creep:Creep){
         err = creep.dorepair();
         if(err == ERR_INVALID_TARGET){
             err = creep.runAs('upgrader');//之后会被任务系统替代
-        }else if(err != OK){
+        }else if(err == ERR_NOT_ENOUGH_ENERGY){
             repairing = false;
             delete creep.memory.repairTarget;
         }

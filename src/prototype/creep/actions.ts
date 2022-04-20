@@ -156,14 +156,14 @@ export default class Worker extends MoveCreep{
         //如果记忆中已经有了目标则直接读取
         let structure = this.memory.repairTarget ? Game.getObjectById(this.memory.repairTarget):null;
         //如果没有，或者目标已经完全不必维修，重新寻找目标
-        if(!structure || !structure.hits || needsRepair(structure,1000) == "healthy"){
+        if(!structure || !structure.hits || structure.hits == structure.hitsMax){
             let structures = _.groupBy(this.room.find(FIND_STRUCTURES),needsRepair);
-            if(structures.wall){
-                structure = this.pos.findClosestByRange(structures.wall);
-                console.log("going to repair"+structure.pos.stringify()+"because it's wall")
-            }else if(structures.unhealthy){
+            if(structures.unhealthy){
                 structure = this.pos.findClosestByRange(structures.unhealthy);
                 console.log("going to repair"+structure.pos.stringify()+"because it's unhealthy")
+            }else if(structures.wall){
+                structure = this.pos.findClosestByRange(structures.wall);
+                console.log("going to repair"+structure.pos.stringify()+"because it's wall")
             }else{
                 structure = null;
             }
