@@ -4,7 +4,7 @@ export const plan1:Plan = {
             name:'E36N52',
             workerlist:[
                 {
-                    name:"ci_transformer",
+                    rolename:"ci_transformer",
                     number:1,
                     body:[
                         CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,
@@ -15,14 +15,14 @@ export const plan1:Plan = {
                     }
                 },
                 {
-                    name:"collector",
+                    rolename:"collector",
                     number:0,
                     body:[CARRY,CARRY,CARRY,CARRY,
                         MOVE,MOVE,MOVE,MOVE
                     ]
                 },
                 {
-                    name:"miner",
+                    rolename:"miner",
                     number:0,
                     body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
                     memory:[
@@ -31,7 +31,7 @@ export const plan1:Plan = {
                     ]
                 },
                 {
-                    name:"link_miner",
+                    rolename:"link_miner",
                     number:2,
                     body:[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE],
                     memory:[
@@ -40,16 +40,28 @@ export const plan1:Plan = {
                     ]
                 },
                 {
-                    name:"transformer",
-                    number:0,
-                    body:[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,CARRY,CARRY,MOVE],
-                    memory:[
-                        {withdrawTargets:["62553709cd5ecd03cb5c597d"],storeTargets:["62559c94dd2d666398c06c85","625644736adc11833762150f"]},
-                        {withdrawTargets:["6256bc628f89e857cbe91ea8"],storeTargets:["625644736adc11833762150f"]}
-                    ]
+                    rolename:"transformer",
+                    number:1,
+                    body:[
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE,
+                        CARRY,MOVE,CARRY,MOVE
+                    ],
+                    memory:{
+                        withdrawTargets:["625644736adc11833762150f"],
+                        storeTargets:["625e94f34db25f697556859f","625eaefe313abb0826d7b2cf","625ebf9a57df5862bbb89d16"]
+                    },
+                    
                 },
                 {
-                    name:"ce_transformer",
+                    rolename:"ce_transformer",
                     number:1,
                     body:[CARRY,CARRY,CARRY],
                     directions:[BOTTOM],
@@ -58,7 +70,7 @@ export const plan1:Plan = {
                     }
                 },
                 {
-                    name:"builder",
+                    rolename:"builder",
                     number:1,
                     body:[
                         WORK,WORK,WORK,
@@ -72,7 +84,7 @@ export const plan1:Plan = {
                     ],
                 },
                 {
-                    name:"upgrader",
+                    rolename:"upgrader",
                     number:4,
                     body:[
                         WORK,WORK,WORK,WORK,WORK,
@@ -89,7 +101,7 @@ export const plan1:Plan = {
             name:'E37N51',
             workerlist:[
                 {
-                    name:"ci_transformer",
+                    rolename:"ci_transformer",
                     number:1,
                     body:[
                         CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,
@@ -100,7 +112,7 @@ export const plan1:Plan = {
                     }
                 },
                 {
-                    name:"miner",
+                    rolename:"miner",
                     number:1,
                     body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
                     memory:[
@@ -109,23 +121,23 @@ export const plan1:Plan = {
                     ]
                 },
                 {
-                    name:"collector",
+                    rolename:"collector",
                     number:3,
                     body:[CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE],
                 },
                 {
-                    name:"upgrader",
-                    number:5,
+                    rolename:"builder",
+                    number:4,
                     body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
                 },
                 {
-                    name:"repairman",
-                    number:1,
-                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
-                },
-                {
-                    name:"s_upgrader",
+                    rolename:"repairman",
                     number:0,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+                {
+                    rolename:"upgrader",
+                    number:2,
                     body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
                     memory:{
                         crossLevel:12
@@ -150,4 +162,55 @@ export const linkPlan1:LinkPlan = {
         {from:<Id<StructureLink>>"625b1f15158189267a1efe69",to:<Id<StructureLink>>"6257e65af4acb2674275fe6e"},
         {from:<Id<StructureLink>>"6257e4bb34865a426e67062d",to:<Id<StructureLink>>"6257e65af4acb2674275fe6e"},
     ]
+}
+
+export const outMinePlan1:OutMinePlan = {
+    miners:[
+        {
+            rolename:'o_miner',
+            team:1,
+            body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE,MOVE,MOVE],
+            memory:{
+                readyPos:{
+                    x:25,
+                    y:35
+                }
+            }
+        }
+    ],
+    transformers:[
+        {
+            rolename:"tr_transformer",
+            team:1,
+            body:[
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE
+            ]
+        }
+    ],
+    reversers:[
+        {
+            rolename:'colonizer',
+            team:1,
+            body:[
+                CLAIM,CLAIM,MOVE,MOVE
+            ],
+            rebirthTicks:{
+                all:800,
+                tick:1
+            }
+        }
+    ],
+    guards:[
+
+    ]
+
+
+
+
+
 }

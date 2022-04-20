@@ -105,7 +105,7 @@ export default class MoveCreep extends Creep{
         /* 查找全局中是否已经有预定路线，如果有了就直接返回路线 */
         const pathKey = `${this.pos.stringify()} ${target.stringify()}`;
         let path = global.pathCache[pathKey];
-        if(path ) {//&& this.room.name != target.roomName
+        if(path && this.room.name != target.roomName) {//
             // console.log("cache found,return");
             return path;
         }
@@ -139,9 +139,9 @@ export default class MoveCreep extends Creep{
                 });
                 // 不支持对穿的位置
                 room.find(FIND_MY_CREEPS).forEach( creep => {
-                    const cl1 = this.memory.crossLevel;
-                    const cl2 = creep.memory.crossLevel;
-                    if (( cl1 && cl2 && cl1 < cl2 ) || creep.memory.standed){
+                    const cl1 = this.memory.crossLevel || 10;
+                    const cl2 = creep.memory.crossLevel || 10;
+                    if ((cl1 < cl2 ) || creep.memory.standed){
                         costs.set(creep.pos.x,creep.pos.y,255);
                     }else{
                         costs.set(creep.pos.x,creep.pos.y,3);

@@ -11,6 +11,8 @@ import { run_as_miner_linked } from "./miner/linked";
 import { run_as_colonizer } from "./claimer/colonizer";
 import { run_as_builder_out } from "./claimer/outbuilder";
 import { run_as_upgrader_special } from "./upgrader/special";
+import { run_as_miner_outer } from "./miner/outter";
+import { run_as_transformer_through_rooms } from "./transformer/throughRooms";
 
 const roles={
     builder:run_as_builder,
@@ -24,7 +26,9 @@ const roles={
     link_miner:run_as_miner_linked,
     colonizer:run_as_colonizer,
     o_builder:run_as_builder_out,
-    s_upgrader:run_as_upgrader_special
+    s_upgrader:run_as_upgrader_special,
+    o_miner:run_as_miner_outer,
+    tr_transformer:run_as_transformer_through_rooms
 }
 
 export class WorketInRole extends Worker{

@@ -1,8 +1,8 @@
 import { loadTemp1API } from './API/temp1';
 import { errorMapper } from './modules/errorMapper'
 import { doTransferLink } from './plan/link/linkModule';
-import { linkPlan1, plan1, towerPlan1 } from './plan/planloader';
-import { checkWorkers, doSpawn } from './plan/spawn/spawnModule';
+import { linkPlan1, outMinePlan1, plan1, towerPlan1 } from './plan/planloader';
+import { checkOuters, checkReverser, checkWorkers, doSpawn } from './plan/spawn/spawnModule';
 import { assignAllPrototype } from './prototype/assign';
 import { cleanMemory, getPixel } from './utils/util';
 import { runTowerDefence } from './war/defence/tower';
@@ -20,6 +20,7 @@ console.log("——载入计划表——");
 global.plan = plan1;
 global.towerplan = towerPlan1;
 global.linkplan = linkPlan1;
+global.outMinePlan = outMinePlan1;
 console.log(`载入完成！总计消耗cpu${Game.cpu.getUsed()}`);
 console.log("——挂载所有原型——");
 assignAllPrototype();
@@ -43,9 +44,7 @@ export const loop = errorMapper(() => {
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
     }
-    if(!(ticks%1500)){
-        global.API.createOutBuilder("c"+Game.time);
-    }
+    
     //压缩cpu
     getPixel();
     //清空待孵化列表
@@ -57,6 +56,10 @@ export const loop = errorMapper(() => {
      * 目前每tick都推
      * TODO:之后会被孪生制取代
      */
+    if(!(ticks%50)){
+        checkOuters();
+    }
+    checkReverser(ticks);
     checkWorkers();
     /**
      * 处理孵化任务，待优化

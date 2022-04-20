@@ -1,14 +1,23 @@
+type CreepBeBirth ={
+    rolename:string,
+    number?:number,
+    body:BodyPartConstant[],
+    team?: number,
+    birthSpawn?:number,
+    memory?:any,
+    directions?:DirectionConstant[],
+    rebirthTicks?:{
+        all:number,
+        tick:number
+    }
+}
+
+
+
 type Plan = {
     roomlist:{
         name:string,
-        workerlist:{
-            name:string,
-            number:number,
-            body:BodyPartConstant[],
-            birthSpawn?:number,
-            memory?:any,
-            directions?:DirectionConstant[]
-        }[]
+        workerlist:CreepBeBirth[]
     }[]
     mianSpawn?:number
     wall:number
@@ -21,4 +30,12 @@ type TowerPlan = {
 type LinkPlan = {
     floor?: number
     pairs:{from:Id<StructureLink>,to:Id<StructureLink>}[]
+}
+
+type OutMinePlan = {
+    miners:CreepBeBirth[]
+    transformers:CreepBeBirth[]
+    reversers:CreepBeBirth[]
+    guards:CreepBeBirth[]
+
 }

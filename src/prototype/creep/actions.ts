@@ -128,6 +128,7 @@ export default class Worker extends MoveCreep{
         if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
         let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_CONSTRUCTION_SITES)[0];
         if(!result) return ERR_NOT_FOUND;
+        //
         let err:number = this.build(result.constructionSite);
         if(err == ERR_NOT_IN_RANGE){
             err = this.goTo(result.constructionSite.pos);
@@ -211,6 +212,23 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
+    public dowithdrawAt(pos:RoomPosition,resourceType = RESOURCE_ENERGY){
+        //先判断背包是否已满，免得进行多余操作
+        if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
+        //查看该点
+        if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
+        let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_STRUCTURES && s.structure.structureType == STRUCTURE_CONTAINER)[0];
+        if(!result) return ERR_NOT_FOUND;
+        //要过去先的
+        let target = <StructureContainer>result.structure;
+        if(!target) return ERR_NOT_ENOUGH_RESOURCES;
+        let err = this.withdraw(target,resourceType);
+        if(err != OK){
+            err = this.goTo(target.pos);
+        }
+        return err;
+    }
+
     public dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity() == 0) return ERR_FULL;
@@ -277,16 +295,12 @@ export default class Worker extends MoveCreep{
 
 
     withdrawInStorage(){
-        this.memory.crossLevel =10;
-        if(this.room.storage){
-            let err = this.dowithdraw(this.room.storage);
-            if(err == OK) return err;
-        }
-        let container:StructureContainer = this.pos.findClosestByRange(FIND_STRUCTURES,{filter:
-            (s) => s.structureType == STRUCTURE_CONTAINER && s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
+        let storages:AnyStoreStructure[] = this.room.find(FIND_STRUCTURES,{filter:
+            (s) => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE)&& s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
         });
-        if(container) {
-            let err = this.dowithdraw(container);
+        let storage = this.pos.findClosestByRange(storages);
+        if(storage) {
+            let err = this.dowithdraw(storage);
             if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[this.room.name+"onhold"]){
                 err = this.goTo(Game.flags[this.room.name+"onhold"].pos);
             }
