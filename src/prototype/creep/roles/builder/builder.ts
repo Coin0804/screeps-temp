@@ -10,6 +10,7 @@ export function run_as_builder(creep:Creep){
     if(building){
         err = creep.dobuild();
         if(err == ERR_NOT_ENOUGH_ENERGY){
+            delete creep.memory.repairTarget;//没有任务系统产生的漏洞，先这样补着
             building =false;
         }else if(err == ERR_NOT_FOUND){
             err = creep.runAs('repairman');//之后会被任务系统替代

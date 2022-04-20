@@ -66,7 +66,7 @@ export default class MoveCreep extends Creep{
         const goResult = this.goByPath();
         // 如果发生撞停或者参数异常，说明缓存可能存在问题，移除缓存
         if (goResult === ERR_INVALID_TARGET){
-            console.log('error happend,clear data.'+this.name);
+            // console.log('error happend,clear data.'+this.name);
             delete this.memory.moveData;
             const pathKey = `${this.pos.stringify()} ${target.stringify()}`;
             if(global.pathCache[pathKey]) delete global.pathCache[pathKey];

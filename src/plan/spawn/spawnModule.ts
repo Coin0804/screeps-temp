@@ -63,9 +63,13 @@ export function checkOuters(){
     }
 }
 
-export function checkReverser(ticks:number){
+export function checkReverser(){
     for(let reverser of global.outMinePlan.reversers){
-        if(ticks%reverser.rebirthTicks.all == reverser.rebirthTicks.tick) load(reverser);
+        let flag = Game.flags["colonize"+reverser.team];
+        if(flag && flag.room && flag.room.controller){
+            let resinfo = flag.room.controller.reservation;
+            if(resinfo && resinfo.ticksToEnd + reverser.efftctTicks <= 5000) load(reverser);
+        }
     }
 }
 

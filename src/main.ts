@@ -56,10 +56,8 @@ export const loop = errorMapper(() => {
      * 目前每tick都推
      * TODO:之后会被孪生制取代
      */
-    if(!(ticks%50)){
-        checkOuters();
-    }
-    checkReverser(ticks);
+    checkReverser();
+    checkOuters();
     checkWorkers();
     /**
      * 处理孵化任务，待优化

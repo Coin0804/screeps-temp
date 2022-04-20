@@ -7,9 +7,9 @@ interface Creep{
     dobuildAt(pos:RoomPosition):number
     dorepair():number
     domine():number
-    dowithdraw(target:AnyStoreStructure|Ruin|Tombstone,resourceType?:ResourceConstant):number
-    dowithdrawAt(pos:RoomPosition,resourceType?:ResourceConstant):number
-    dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone):number
+    dowithdraw(target:AnyStoreStructure|Ruin|Tombstone,resourceType?:ResourceConstant, floor?:number):number
+    dowithdrawAt(pos:RoomPosition,resourceType?:ResourceConstant, floor?:number):number
+    dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone, floor?:number):number
     doclaim(controller:StructureController):number
     doreserve(controller:StructureController):number
     searchAndCollecte():number

@@ -22,6 +22,8 @@ export function run_as_transformer_through_rooms(creep:Creep){
     }else{
         //去搬去
         if(creep.room.name != fromflag.pos.roomName) return creep.goTo(fromflag.pos);
-        return creep.dowithdrawAt(fromflag.pos);
+        let err = creep.dowithdrawAt(fromflag.pos);
+        if(err != OK)return creep.goTo(fromflag.pos);
+        return err;
     }
 }

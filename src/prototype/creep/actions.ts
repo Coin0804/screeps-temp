@@ -1,7 +1,15 @@
 import { store2Array } from "../../utils/util.js";
 import MoveCreep from "./go.js";
 
-
+function needsRepair(s:AnyStructure,plus = 0){
+    if(s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART){
+        if(s.hits < (global.plan.wall||1000)+plus) return "wall";
+        return "healthy";
+    }else if(s.hits && s.hits < s.hitsMax*0.85){
+        return "unhealthy";
+    } 
+    return "healthy";
+}
 
 
 /**
@@ -143,27 +151,19 @@ export default class Worker extends MoveCreep{
     public dorepair(){
         //先判断能量是否还有，免得进行多余操作
         if(this.store.getUsedCapacity(RESOURCE_ENERGY) == 0){
-            // this.memory.repairTarget = null;//没能量了解绑对象 不知道为什么没成功
             return ERR_NOT_ENOUGH_ENERGY;
         } 
         //如果记忆中已经有了目标则直接读取
         let structure = this.memory.repairTarget ? Game.getObjectById(this.memory.repairTarget):null;
         //如果没有，或者目标已经完全不必维修，重新寻找目标
-        if(!structure || !structure.hits || structure.hits == structure.hitsMax){
-            let structures = _.groupBy(this.room.find(FIND_STRUCTURES),(s) => {
-                if(s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART){
-                    if(s.hits < (global.plan.wall || 250000)) return "wall";
-                }else if(s.hits && s.hits < s.hitsMax*0.85){
-                    return "unhealthy";
-                } 
-                return "healthy";
-            });
-            if(structures.unhealthy){
-                structure = this.pos.findClosestByRange(structures.unhealthy);
-                console.log("going to repair"+structure.pos.stringify()+"because it's unhealthy")
-            }else if(structures.wall){
+        if(!structure || !structure.hits || needsRepair(structure,1000) == "healthy"){
+            let structures = _.groupBy(this.room.find(FIND_STRUCTURES),needsRepair);
+            if(structures.wall){
                 structure = this.pos.findClosestByRange(structures.wall);
                 console.log("going to repair"+structure.pos.stringify()+"because it's wall")
+            }else if(structures.unhealthy){
+                structure = this.pos.findClosestByRange(structures.unhealthy);
+                console.log("going to repair"+structure.pos.stringify()+"because it's unhealthy")
             }else{
                 structure = null;
             }
@@ -178,7 +178,7 @@ export default class Worker extends MoveCreep{
             }
             return err;
         }
-        this.memory.repairTarget = null;//否则解绑记忆
+        delete this.memory.repairTarget;//否则解绑记忆
         return ERR_INVALID_TARGET;
     }
     
@@ -200,11 +200,11 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
-    public dowithdraw(target:AnyStoreStructure|Ruin|Tombstone,resourceType = RESOURCE_ENERGY){
+    public dowithdraw(target:AnyStoreStructure|Ruin|Tombstone,resourceType = RESOURCE_ENERGY,floor = 0){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
         //先判断要取的东西是否有，免得进行多余操作
-        if(!target || target.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
+        if(!target || target.store.getUsedCapacity(resourceType) <= floor) return ERR_NOT_ENOUGH_RESOURCES;
         let err = this.withdraw(target,resourceType);
         if(err == ERR_NOT_IN_RANGE){
             err = this.goTo(target.pos);
@@ -212,7 +212,7 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
-    public dowithdrawAt(pos:RoomPosition,resourceType = RESOURCE_ENERGY){
+    public dowithdrawAt(pos:RoomPosition,resourceType = RESOURCE_ENERGY,floor = 0){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
         //查看该点
@@ -221,7 +221,7 @@ export default class Worker extends MoveCreep{
         if(!result) return ERR_NOT_FOUND;
         //要过去先的
         let target = <StructureContainer>result.structure;
-        if(!target) return ERR_NOT_ENOUGH_RESOURCES;
+        if(!target || target.store.getUsedCapacity(resourceType) <= floor) return ERR_NOT_ENOUGH_RESOURCES;
         let err = this.withdraw(target,resourceType);
         if(err != OK){
             err = this.goTo(target.pos);
@@ -229,20 +229,23 @@ export default class Worker extends MoveCreep{
         return err;
     }
 
-    public dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone){
+    public dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone,floor = 0){
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity() == 0) return ERR_FULL;
         //数组化，目的是排序
         let array = store2Array(target.store);
+        let err:number = ERR_NOT_ENOUGH_RESOURCES;
         for(const r of array){
             //先判断要取的东西是否有，免得进行多余操作
-            if(!target || target.store.getUsedCapacity(r.resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
-            let err = this.withdraw(target,r.resourceType);
+            if(!target || target.store.getUsedCapacity(r.resourceType) <= ((r.resourceType == RESOURCE_ENERGY)?floor:0)) return ERR_NOT_ENOUGH_RESOURCES;
+            err = this.withdraw(target,r.resourceType);
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(target.pos);
             }
             if(err ==OK) return err;
         }
+        return err;
+        
     }
 
     public doclaim(controller:StructureController){

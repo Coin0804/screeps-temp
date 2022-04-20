@@ -5,11 +5,11 @@ export function run_as_repairman(creep:Creep){
     let err = -100;
     if(repairing){
         err = creep.dorepair();
-        if(err == ERR_NOT_ENOUGH_ENERGY){
-            creep.memory.repairTarget = null;
-            repairing = false;
-        }else if(err == ERR_INVALID_TARGET){
+        if(err == ERR_INVALID_TARGET){
             err = creep.runAs('upgrader');//之后会被任务系统替代
+        }else if(err != OK){
+            repairing = false;
+            delete creep.memory.repairTarget;
         }
     }
     if(!repairing){

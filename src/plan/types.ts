@@ -6,10 +6,7 @@ type CreepBeBirth ={
     birthSpawn?:number,
     memory?:any,
     directions?:DirectionConstant[],
-    rebirthTicks?:{
-        all:number,
-        tick:number
-    }
+    efftctTicks?:number
 }
 
 

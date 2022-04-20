@@ -16,7 +16,7 @@ export function isStoreable(storeTargets:Id<AnyStoreStructure>[],amount:number){
     if(storeTargets){
         for(let id of storeTargets){
             let target = Game.getObjectById(id);
-            if(target.store.getFreeCapacity(RESOURCE_ENERGY) > amount/2 && amount >= 50){
+            if(target && target.id && target.store.getFreeCapacity(RESOURCE_ENERGY) > amount/2 && amount >= 50){
                 return target;
             }
         }
