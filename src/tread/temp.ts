@@ -10,15 +10,17 @@ export function autoTreadEnergy(){
     if(Game.market.credits > 1000000){
         let orders = Game.market.getAllOrders((o) => 
             o.resourceType == RESOURCE_ENERGY &&
-            o.amount >= 10000 && 
+            o.amount >= 1000 && 
             o.amount*o.price+1000000 < Game.market.credits &&
             truePrice(o) <= 3 &&
-            o.type == ORDER_SELL &&
-            o.price <= 1
+            o.type == ORDER_SELL
         );
         orders = orders.sort((a,b) => truePrice(a) - truePrice(b));
-        for(let i in orders [0])console.log(i,orders[0][i]);
-        console.log(`buy ${orders[0].amount} energy in true price ${truePrice(orders[0])}`);
-        Game.market.deal(orders[0].id,orders[0].amount,"E36N52");
+        if(orders[0]){
+            for(let i in orders [0])console.log(i,orders[0][i]);
+            console.log(`buy ${orders[0].amount} energy in true price ${truePrice(orders[0])}`);
+            Game.market.deal(orders[0].id,orders[0].amount,"E36N52");   
+        }
+        
     }
 }

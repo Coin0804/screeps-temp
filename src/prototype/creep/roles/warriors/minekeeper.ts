@@ -1,3 +1,4 @@
+import { getOppositeDirection } from "@/utils/util";
 import { Dictionary } from "lodash";
 import { run_as_builder_out } from "../workers/claimer/outbuilder";
 
@@ -41,11 +42,17 @@ export function run_as_minekeeper(creep:Creep){
         creep.goTo(flag.pos);
     }else{
         if(cloestEnemy){
-            creep.goTo(cloestEnemy.pos,3);
+            creep.say("为了战斗的荣耀！")
+            if(cloestEnemy.pos.getRangeTo(creep) >3 && cloestEnemy.pos.getRangeTo(creep) <8){
+                creep.goTo(cloestEnemy.pos,3);
+            }else if(cloestEnemy.pos.getRangeTo(creep) <=3){
+                creep.go(getOppositeDirection(creep.pos.getDirectionTo(cloestEnemy)));
+            }
             creep.heal(creep);
             creep.rangedAttack(cloestEnemy);
         }
         else{
+            if(creep.hits< creep.hitsMax)creep.heal(creep);
             if(flag.pos.roomName == Game.flags['build'+team].pos.roomName){
                 let err = run_as_builder_out(creep)
             }

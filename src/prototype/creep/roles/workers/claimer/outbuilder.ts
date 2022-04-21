@@ -9,6 +9,7 @@ function yellowFarBuild(creep:Creep,flag:Flag){
     if(building){
         err = creep.dobuild();
         if(err == ERR_NOT_ENOUGH_ENERGY){
+            delete creep.memory.repairTarget;//难看的补丁
             building =false;
         }else if(err == ERR_NOT_FOUND){
             if(creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) err = run_as_repairman(creep);
@@ -17,6 +18,7 @@ function yellowFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
+        if(err != OK) err = creep.withdrawInStorage();
         if(err != OK) err = creep.domine();
         //todo
         if(creep.store.getFreeCapacity() == 0){
@@ -44,6 +46,7 @@ function redFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
+        if(err != OK) err = creep.withdrawInStorage();
         if(err != OK) err = creep.domine();
         //todo
         if(creep.store.getFreeCapacity() == 0){

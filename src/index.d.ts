@@ -4,7 +4,7 @@ type SpawnProperties = {
 }
 
 type SpawnItem = {
-    room:string
+    birthroom:string
     birthSpawn?:number
     body:BodyPartConstant[]
     name:string

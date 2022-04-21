@@ -4,6 +4,7 @@ import { doTransferLink } from './plan/link/linkModule';
 import { linkPlan1, outMinePlan1, plan1, towerPlan1 } from './plan/planloader';
 import { checkMineKeeper, checkOuters, checkReverser, checkWorkers, doSpawn } from './plan/spawn/spawnModule';
 import { assignAllPrototype } from './prototype/assign';
+import { stateScanner1 } from './stats/memoryStats';
 import { autoTreadEnergy } from './tread/temp';
 import { cleanMemory, getPixel } from './utils/util';
 import { runTowerDefence } from './war/defence/tower';
@@ -44,8 +45,11 @@ export const loop = errorMapper(() => {
     if(!(ticks%100)){
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
+    }
+    if(!((ticks+25)%50)){
         autoTreadEnergy();
     }
+
     
     //压缩cpu
     getPixel();
@@ -80,5 +84,5 @@ export const loop = errorMapper(() => {
 
     // 先用着吧
     runTowerDefence();
-    
+    stateScanner1();
 });

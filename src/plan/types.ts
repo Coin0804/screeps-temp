@@ -1,12 +1,13 @@
 type CreepBeBirth ={
     rolename:string,
-    number?:number,
+    number:number,
     body:BodyPartConstant[],
     team?: number,
     birthSpawn?:number,
     memory?:any,
     directions?:DirectionConstant[],
     efftctTicks?:number
+    birthroom?:string
 }
 
 
@@ -34,5 +35,4 @@ type OutMinePlan = {
     transformers:CreepBeBirth[]
     reversers:CreepBeBirth[]
     guards:CreepBeBirth[]
-
 }

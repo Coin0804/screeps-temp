@@ -217,7 +217,9 @@ export default class Worker extends MoveCreep{
         if(this.store.getFreeCapacity(resourceType) == 0) return ERR_FULL;
         //查看该点
         if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
-        let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_STRUCTURES && s.structure.structureType == STRUCTURE_CONTAINER)[0];
+        let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_STRUCTURES && 
+            (s.structure.structureType == STRUCTURE_CONTAINER || s.structure.structureType == STRUCTURE_STORAGE)
+        )[0];
         if(!result) return ERR_NOT_FOUND;
         //要过去先的
         let target = <StructureContainer>result.structure;

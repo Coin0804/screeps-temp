@@ -105,7 +105,7 @@ export default class MoveCreep extends Creep{
         /* 查找全局中是否已经有预定路线，如果有了就直接返回路线 */
         const pathKey = `${this.pos.stringify()} ${target.stringify()}`;
         let path = global.pathCache[pathKey];
-        if(path ) {//&& this.room.name != target.roomName
+        if(path && this.room.name != target.roomName) {//
             // console.log("cache found,return");
             return path;
         }
