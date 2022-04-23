@@ -144,7 +144,7 @@ export default class MoveCreep extends Creep{
                     if ((cl1 < cl2 ) || creep.memory.standed){
                         costs.set(creep.pos.x,creep.pos.y,255);
                     }else{
-                        costs.set(creep.pos.x,creep.pos.y,3);
+                        costs.set(creep.pos.x,creep.pos.y,2);
                     }
                 });
                 return costs;

@@ -38,4 +38,8 @@ interface CreepMemory{
     withdrawTargets?:Id<AnyStoreStructure | Ruin | Tombstone>[]
     //
     linkfloor?: number
+    //
+    buildStrategy?: 0|1
+    //
+    dush?: boolean
 }

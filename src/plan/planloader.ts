@@ -39,22 +39,20 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"transformer",
-                    number:1,
+                    number:0,
                     body:[
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE,
-                        CARRY,MOVE,CARRY,MOVE
+                        CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE,
                     ],
                     memory:{
                         withdrawTargets:["625644736adc11833762150f"],
                         storeTargets:[
-                            "625e94f34db25f697556859f","625eaefe313abb0826d7b2cf",
-                            "625ebf9a57df5862bbb89d16","625fd65a61c01b692f13f48e",
+                            "625fd65a61c01b692f13f48e","625e94f34db25f697556859f","625eaefe313abb0826d7b2cf",
+                            "625ebf9a57df5862bbb89d16",
                             "625fdcaca6b99f9f317e49c3"
                         ]
                     },
@@ -71,7 +69,7 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"builder",
-                    number:1,
+                    number:3,
                     body:[
                         WORK,WORK,WORK,
                         WORK,WORK,WORK,
@@ -85,7 +83,7 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"upgrader",
-                    number:4,
+                    number:1,
                     body:[
                         WORK,WORK,WORK,WORK,WORK,
                         WORK,WORK,WORK,WORK,WORK,
@@ -134,8 +132,8 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"collector",
-                    number:0,
-                    body:[CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],
+                    number:1,
+                    body:[CARRY,CARRY,MOVE],
                 },
                 {
                     rolename:"builder",
@@ -156,6 +154,69 @@ export const plan1:Plan = {
                     }
                 },
             ]
+        },//第二个房间
+        {
+            name:'E43N51',
+            workerlist:[
+                {
+                    rolename:"ci_transformer",
+                    number:1,
+                    body:[
+                        CARRY,CARRY,MOVE
+                    ],
+                    memory:{
+                        crossLevel:12
+                    }
+                },
+                {
+                    rolename:"miner",
+                    number:0,
+                    body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
+                    memory:[
+                        {source:1,readyPos:{x:17,y:21}},
+                        {source:0,readyPos:{x:31,y:20}}
+                    ]
+                },
+                {
+                    rolename:"transformer",
+                    number:0,
+                    body:[
+                        CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,
+                        CARRY,CARRY,MOVE
+                    ],
+                    memory:[
+                        {withdrawTargets:["625eeb549412e176b53e52b6"],storeTargets:["625ffa88fa0bdb9d37a98cdc"]},
+                        {withdrawTargets:["625ee9cbb3a6b4210362cda0"],storeTargets:["625ffa88fa0bdb9d37a98cdc"]},
+                    ]
+                },
+                {
+                    rolename:"collector",
+                    number:0,
+                    body:[CARRY,CARRY,MOVE],
+                },
+                {
+                    rolename:"builder",
+                    number:3,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    memory:{
+                        buildStrategy:1,
+                        dush:true
+                    }
+                },
+                {
+                    rolename:"repairman",
+                    number:0,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                },
+                {
+                    rolename:"upgrader",
+                    number:5,
+                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    memory:{
+                        dush:true
+                    }
+                },
+            ]
         }
     ],
     wall:119000
@@ -165,7 +226,7 @@ export const plan1:Plan = {
 export const towerPlan1:TowerPlan = {
     towerlist:[
         <Id<StructureTower>>"62559c94dd2d666398c06c85",<Id<StructureTower>>"6257e90c2056ad2824f23937",
-        <Id<StructureTower>>"625f6c727e57d60e9b91cbfc"
+        <Id<StructureTower>>"625f6c727e57d60e9b91cbfc",<Id<StructureTower>>"626360844760dc7759e6302f"
     ]
 }
 
@@ -227,7 +288,7 @@ export const outMinePlan1:OutMinePlan = {
         {
             rolename:"tr_transformer",
             birthroom:'E37N51',
-            number:2,
+            number:5,
             team:3,
             body:[
                 CARRY,MOVE,CARRY,

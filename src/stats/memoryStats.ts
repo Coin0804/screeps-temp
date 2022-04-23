@@ -1,4 +1,6 @@
 export function stateScanner1() {
+
+
     // 每 20 tick 运行一次
     if (Game.time % 30) return; 
   
@@ -15,11 +17,21 @@ export function stateScanner1() {
     Memory.stats1.bucket = Game.cpu.bucket;
 
 
-    let progressnow = Game.rooms["E36N52"].controller.progress;
-    let totalProgressnow = Game.rooms["E36N52"].controller.progressTotal;
-    if(Memory.stats1.room1prosess) Memory.stats1.room1prosessSpeed = (progressnow - Memory.stats1.room1prosess)/30;
-    Memory.stats1.room1prosess = progressnow;
-    Memory.stats1.room1prosessPersentage = (progressnow/totalProgressnow) * 100;
+    let progressnow1 = Game.rooms["E36N52"].controller.progress;
+    let totalProgressnow1 = Game.rooms["E36N52"].controller.progressTotal;
+    if(Memory.stats1.room1prosess) Memory.stats1.room1prosessSpeed = (progressnow1 - Memory.stats1.room1prosess)/30;
+    Memory.stats1.room1prosess = progressnow1;
+    Memory.stats1.room1prosessPersentage = (progressnow1/totalProgressnow1) * 100;
+
+    let progressnow3 = Game.rooms["E43N51"].controller.progress;
+    let totalProgressnow3 = Game.rooms["E43N51"].controller.progressTotal;
+    if(Memory.stats1.room3prosess) Memory.stats1.room3prosessSpeed = (progressnow3 - Memory.stats1.room3prosess)/30;
+    Memory.stats1.room3prosess = progressnow3;
+    Memory.stats1.room3prosessPersentage = (progressnow3/totalProgressnow3) * 100;
+
+
+
+    
     let storage = Game.rooms["E36N52"].storage.store.getUsedCapacity(RESOURCE_ENERGY);
     // if(Memory.stats1.room1storage) Memory.stats1.room1storageChange = (Memory.stats1.room1storage - storage)/30;
     Memory.stats1.room1storage = storage;

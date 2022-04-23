@@ -1,6 +1,6 @@
 npm init -y
 
-npm install -D @types/lodash@3.10.1 @type/screeps-arena
+npm install -D @types/lodash@3.10.1 @types/screeps-arena
 
 `src` => main.js
 

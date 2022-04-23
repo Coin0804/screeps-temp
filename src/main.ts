@@ -46,7 +46,7 @@ export const loop = errorMapper(() => {
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
     }
-    if(!((ticks+25)%50)){
+    if(!((ticks+10)%20)){
         autoTreadEnergy();
     }
 
