@@ -22,4 +22,7 @@ export function loadTemp1API(){
     global.API.test1 = autoTreadEnergy;
     // let creep:Creep;
     // creep.signController()
+
+
+    
 }

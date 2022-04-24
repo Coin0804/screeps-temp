@@ -51,7 +51,7 @@ export default class Worker extends MoveCreep{
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(this.room.controller.pos,3);
             }else if(dush){//未测试，就硬挤
-                err = this.goTo(this.room.controller.pos,1);
+                // err = this.goTo(this.room.controller.pos,1);
             }
             return err;
         }
@@ -84,6 +84,22 @@ export default class Worker extends MoveCreep{
         return ERR_FULL;
     }
 
+    public dostoreAt(pos:RoomPosition,resourceType = RESOURCE_ENERGY){
+        //先判断要放的东西是否有，免得进行多余操作
+        if(this.store.getUsedCapacity() == 0 )return ERR_NOT_ENOUGH_RESOURCES;
+        if(!this.memory.withdrawAll && this.store.getUsedCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
+        //查看该点
+        if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
+        let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_STRUCTURES && 
+            (s.structure as AnyStoreStructure).store
+        )[0];
+        if(!result) return ERR_NOT_FOUND;
+        //要过去先的
+        let target = result.structure as AnyStoreStructure;
+        if(!target || target.store.getFreeCapacity(resourceType) == 0) return ERR_NOT_ENOUGH_RESOURCES;
+        if(this.memory.withdrawAll) return this.dostoreAll(target);
+        return this.dostore(target,resourceType);
+    }
 
     /**
      * 储存所有
@@ -94,7 +110,7 @@ export default class Worker extends MoveCreep{
         if(this.store.getUsedCapacity() == 0) return ERR_NOT_ENOUGH_ENERGY;
         //数组化，目的是排序
         let array = store2Array(this.store);
-        for(const r of array){
+        for(let r of array){
             //先判断要放的东西是否还能放，免得进行多余操作
             if(target && target.store.getFreeCapacity(r.resourceType) > 0){
                 let err = this.transfer(target,r.resourceType);
@@ -122,7 +138,7 @@ export default class Worker extends MoveCreep{
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(constructionsites[index].pos,3);
             }else if(dush){//待测试
-                err = this.goTo(constructionsites[index].pos,1);
+                // err = this.goTo(constructionsites[index].pos,1);
             }
             return err;
         }
@@ -158,12 +174,12 @@ export default class Worker extends MoveCreep{
         //如果没有，或者目标已经完全不必维修，重新寻找目标
         if(!structure || !structure.hits || structure.hits == structure.hitsMax){
             let structures = _.groupBy(this.room.find(FIND_STRUCTURES),needsRepair);
-            if(structures.unhealthy){
-                structure = this.pos.findClosestByRange(structures.unhealthy);
-                console.log("going to repair"+structure.pos.stringify()+"because it's unhealthy")
-            }else if(structures.wall){
+            if(structures.wall){
                 structure = this.pos.findClosestByRange(structures.wall);
                 console.log("going to repair"+structure.pos.stringify()+"because it's wall")
+            }else if(structures.unhealthy){
+                structure = this.pos.findClosestByRange(structures.unhealthy);
+                console.log("going to repair"+structure.pos.stringify()+"because it's unhealthy")
             }else{
                 structure = null;
             }
@@ -218,17 +234,14 @@ export default class Worker extends MoveCreep{
         //查看该点
         if(this.room.name != pos.roomName) return ERR_NOT_IN_RANGE;
         let result = this.room.lookAt(pos).filter((s) => s.type == LOOK_STRUCTURES && 
-            (s.structure.structureType == STRUCTURE_CONTAINER || s.structure.structureType == STRUCTURE_STORAGE)
+            (s.structure as AnyStoreStructure).store
         )[0];
         if(!result) return ERR_NOT_FOUND;
         //要过去先的
-        let target = <StructureContainer>result.structure;
+        let target = result.structure as AnyStoreStructure;
+        if(this.memory.withdrawAll) return this.dowithdrawAll(target);
         if(!target || target.store.getUsedCapacity(resourceType) <= floor) return ERR_NOT_ENOUGH_RESOURCES;
-        let err = this.withdraw(target,resourceType);
-        if(err != OK){
-            err = this.goTo(target.pos);
-        }
-        return err;
+        return this.withdraw(target,resourceType);;
     }
 
     public dowithdrawAll(target:AnyStoreStructure|Ruin|Tombstone,floor = 0){

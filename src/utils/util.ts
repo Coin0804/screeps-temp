@@ -44,9 +44,9 @@ export function getOppositeDirection(direction:DirectionConstant){
 }
 
 export function store2Array(store){
-    const array = []
+    let array:{resourceType:ResourceConstant,amount:number}[] = [];
     for (let resourceType in store) {
-        array.push({resourceType:resourceType,amount:store.getUsedCapacity(resourceType)});
+        array.push({resourceType:resourceType as ResourceConstant,amount:store.getUsedCapacity(resourceType)});
     }
     return array.sort((a,b) => a.amount - b.amount);
 }
@@ -72,3 +72,8 @@ export function getPixel(){
         console.log("好耶，又有一个Pixcel咯");
     }
 }
+
+// export function maxbody(mr,d){
+//     // x= (75/3d)y
+//     mr/(25*(5*(75/3*d) +3))
+// }

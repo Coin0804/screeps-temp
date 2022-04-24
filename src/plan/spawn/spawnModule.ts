@@ -28,7 +28,7 @@ function load(creepBeBirth:CreepBeBirth,roomname?:string){
                     properties:properties
                 };
                 if(creepBeBirth.birthSpawn)spawnItem.birthSpawn = creepBeBirth.birthSpawn;
-                if(spawnItem.name == "colonizer_2")console.log(spawnItem.birthroom);
+                if(spawnItem.name == "tr_transformer_4_2")console.log(spawnItem.birthroom);
                 spawnlist.push(spawnItem);
             }
         }else{
@@ -88,7 +88,7 @@ export function doSpawn(){
             spawnItem = spawnlist.shift();
             const spawn = Game.rooms[spawnItem.birthroom].find(FIND_MY_SPAWNS)[spawnItem.birthSpawn?spawnItem.birthSpawn:0];
             err = spawn.spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
-            if(spawnItem.name == "colonizer_2")console.log(err);
+            if(spawnItem.name == "tr_transformer_4_2")console.log(err);
 
         }
         return err;

@@ -20,15 +20,6 @@ export const plan1:Plan = {
                     body:[CARRY,CARRY,MOVE]
                 },
                 {
-                    rolename:"miner",
-                    number:0,
-                    body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
-                    memory:[
-                        {source:0,readyPos:{x:44,y:12}},
-                        {source:1,readyPos:{x:19,y:33}}
-                    ]
-                },
-                {
                     rolename:"link_miner",
                     number:2,
                     body:[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE],
@@ -39,11 +30,8 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"transformer",
-                    number:0,
+                    number:1,
                     body:[
-                        CARRY,CARRY,MOVE,
-                        CARRY,CARRY,MOVE,
-                        CARRY,CARRY,MOVE,
                         CARRY,CARRY,MOVE,
                         CARRY,CARRY,MOVE,
                         CARRY,CARRY,MOVE,
@@ -69,10 +57,14 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"builder",
-                    number:3,
+                    number:1,
                     body:[
                         WORK,WORK,WORK,
                         WORK,WORK,WORK,
+                        WORK,WORK,WORK,
+                        WORK,WORK,WORK,
+                        CARRY,CARRY,CARRY,
+                        CARRY,CARRY,CARRY,
                         CARRY,CARRY,CARRY,
                         CARRY,CARRY,CARRY,
                         MOVE,MOVE,MOVE,
@@ -83,14 +75,17 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"upgrader",
-                    number:1,
+                    birthSpawn:1,
+                    number:2,
+                    directions:[TOP_LEFT,LEFT],
                     body:[
                         WORK,WORK,WORK,WORK,WORK,
                         WORK,WORK,WORK,WORK,WORK,
                         WORK,WORK,WORK,WORK,WORK,
+                        WORK,WORK,WORK,WORK,WORK,
+                        WORK,WORK,WORK,WORK,
                         CARRY,CARRY,CARRY,CARRY,CARRY,
-                        MOVE,MOVE,MOVE,MOVE,MOVE,
-                        MOVE,MOVE,MOVE,MOVE,MOVE
+                        MOVE,MOVE,MOVE,MOVE,MOVE,MOVE
                     ],
                 }
             ]
@@ -162,6 +157,7 @@ export const plan1:Plan = {
                     rolename:"ci_transformer",
                     number:1,
                     body:[
+                        CARRY,CARRY,MOVE,
                         CARRY,CARRY,MOVE
                     ],
                     memory:{
@@ -196,11 +192,14 @@ export const plan1:Plan = {
                 },
                 {
                     rolename:"builder",
-                    number:3,
-                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    number:2,
+                    body:[
+                        WORK,WORK,WORK,WORK,WORK,WORK,
+                        CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
+                        MOVE,MOVE,MOVE,MOVE,MOVE,MOVE
+                    ],
                     memory:{
                         buildStrategy:1,
-                        dush:true
                     }
                 },
                 {
@@ -211,7 +210,11 @@ export const plan1:Plan = {
                 {
                     rolename:"upgrader",
                     number:5,
-                    body:[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+                    body:[
+                        WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+                        CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
+                        MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE
+                    ],//125x+75y <= 1300  | 50y/(2d+(50y/x))
                     memory:{
                         dush:true
                     }
@@ -226,7 +229,8 @@ export const plan1:Plan = {
 export const towerPlan1:TowerPlan = {
     towerlist:[
         <Id<StructureTower>>"62559c94dd2d666398c06c85",<Id<StructureTower>>"6257e90c2056ad2824f23937",
-        <Id<StructureTower>>"625f6c727e57d60e9b91cbfc",<Id<StructureTower>>"626360844760dc7759e6302f"
+        <Id<StructureTower>>"625f6c727e57d60e9b91cbfc",<Id<StructureTower>>"626360844760dc7759e6302f",
+        <Id<StructureTower>>"6263e7b22b859876d16f33a3"
     ]
 }
 
@@ -242,6 +246,7 @@ export const outMinePlan1:OutMinePlan = {
         {
             rolename:'o_miner',
             birthroom:'E36N52',
+            birthSpawn:1,
             team:1,
             number:1,
             body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
@@ -252,12 +257,20 @@ export const outMinePlan1:OutMinePlan = {
             number:1,
             team:2,
             body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
+        },
+        {
+            rolename:'o_miner',
+            birthroom:'E37N51',
+            number:1,
+            team:3,
+            body:[WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],
         }
     ],
     transformers:[
         {
             rolename:"tr_transformer",
             birthroom:'E36N52',
+            birthSpawn:1,
             number:1,
             team:1,
             body:[
@@ -284,11 +297,23 @@ export const outMinePlan1:OutMinePlan = {
                 CARRY,MOVE,CARRY,
                 CARRY,MOVE,CARRY
             ]
+        },{
+            rolename:"tr_transformer",
+            birthroom:'E37N51',
+            number:2,
+            team:4,
+            body:[
+                CARRY,MOVE,CARRY,
+                CARRY,MOVE,CARRY,
+                CARRY,MOVE,CARRY,
+                CARRY,MOVE,CARRY,
+                CARRY,MOVE,CARRY
+            ]
         },
         {
             rolename:"tr_transformer",
             birthroom:'E37N51',
-            number:5,
+            number:3,
             team:3,
             body:[
                 CARRY,MOVE,CARRY,
@@ -300,18 +325,39 @@ export const outMinePlan1:OutMinePlan = {
                 CARRY,MOVE,CARRY,
                 CARRY,MOVE,CARRY
             ]
+        },{
+            rolename:"tr_transformer",
+            birthroom:'E43N51',
+            number:10,
+            team:5,
+            body:[
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE,
+                CARRY,MOVE,CARRY,MOVE
+            ],
+            memory:{
+                withdrawAll:true,
+                timeToSuicide:500
+            }
         }
     ],
     reversers:[
         {
             rolename:'colonizer',
             birthroom:'E36N52',
+            birthSpawn:1,
             number:1,
             team:1,
             body:[
                 CLAIM,CLAIM,MOVE,MOVE
             ],
-            efftctTicks:500
+            efftctTicks:600
         },
         {
             rolename:'colonizer',
@@ -321,7 +367,17 @@ export const outMinePlan1:OutMinePlan = {
             body:[
                 CLAIM,CLAIM,MOVE,MOVE
             ],
-            efftctTicks:500
+            efftctTicks:600
+        },
+        {
+            rolename:'colonizer',
+            birthroom:'E37N51',
+            number:1,
+            team:3,
+            body:[
+                CLAIM,CLAIM,MOVE,MOVE
+            ],
+            efftctTicks:600
         }
     ],
     guards:[
@@ -330,12 +386,13 @@ export const outMinePlan1:OutMinePlan = {
             birthroom:'E36N52',
             number:1,
             team:1,
+            birthSpawn:1,
             body:[
-                WORK,WORK,CARRY,
+                TOUGH,WORK,WORK,CARRY,
                 MOVE,MOVE,MOVE,MOVE,MOVE,
-                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,
-                HEAL,HEAL,HEAL,
-                RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK
+                MOVE,MOVE,MOVE,MOVE,MOVE,
+                HEAL,HEAL,
+                RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK
             ]
         },
         {
@@ -343,6 +400,19 @@ export const outMinePlan1:OutMinePlan = {
             birthroom:'E37N51',
             number:1,
             team:2,
+            body:[
+                TOUGH,TOUGH,TOUGH,
+                WORK,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,
+                RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,
+                HEAL                
+            ]
+        },
+        {
+            rolename:'minekeeper',
+            birthroom:'E37N51',
+            number:1,
+            team:3,
             body:[
                 TOUGH,TOUGH,TOUGH,
                 WORK,CARRY,

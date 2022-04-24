@@ -2,6 +2,7 @@ interface Creep{
     dopickup(resource:Resource):number
     doupgrade(dush?:boolean):number
     dostore(target:AnyStoreStructure,resourceType?:ResourceConstant):number
+    dostoreAt(pos:RoomPosition,resourceType?:ResourceConstant):number
     dostoreAll(target:AnyStoreStructure):number
     dobuild(strategy?:1|0,dush?:boolean):number
     dobuildAt(pos:RoomPosition):number
@@ -42,4 +43,10 @@ interface CreepMemory{
     buildStrategy?: 0|1
     //
     dush?: boolean
+    //
+    withdrawAll?: boolean
+    //
+    timeToSuicide?: number
+    //
+    workstatus?: number
 }

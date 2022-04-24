@@ -46,9 +46,9 @@ export const loop = errorMapper(() => {
         console.log(`当前已经运行了 ${ticks} ticks`);//每运行100个tick就打出来
         cleanMemory();//回收没用的creep记忆
     }
-    if(!((ticks+10)%20)){
-        autoTreadEnergy();
-    }
+    // if(!((ticks+10)%20)){
+    //     autoTreadEnergy();
+    // }
 
     
     //压缩cpu
@@ -85,4 +85,5 @@ export const loop = errorMapper(() => {
     // 先用着吧
     runTowerDefence();
     stateScanner1();
+    if(Game.cpu.getUsed() < 12 && !(ticks%25))autoTreadEnergy(3.5);
 });

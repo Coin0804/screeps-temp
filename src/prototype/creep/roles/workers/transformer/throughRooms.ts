@@ -8,18 +8,24 @@ export function run_as_transformer_through_rooms(creep:Creep){
     let toflag = Game.flags['to'+team];
     if(!fromflag || !toflag) return creep.goTo(Game.flags['aim'].pos);
     //状态判断
-    if(creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
+    if(creep.store.getUsedCapacity() > creep.store.getFreeCapacity()){
         //回家
+        if(!creep.memory.workstatus) creep.memory.workstatus = 1;
         if(creep.room.name != toflag.pos.roomName) return creep.goTo(toflag.pos);
         if(toflag.color == COLOR_GREEN){
             let target:AnyStoreStructure = creep.pos.findClosestByRange(FIND_STRUCTURES,{
                 filter:s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE)
                 && s.store.getFreeCapacity(RESOURCE_ENERGY) > 0
             });
-            return creep.dostore(target);
+            let err = creep.dostore(target);
+            if(err == OK)return err;
+        }else if(toflag.color == COLOR_PURPLE){
+            let err = creep.dostoreAt(toflag.pos);
+            if(err == OK)return err;
         }
         return creep.goTo(toflag.pos)
     }else{
+        if(creep.memory.workstatus == 1 && creep.store.getUsedCapacity() == 0) return creep.suicide();
         //去搬去
         if(creep.room.name != fromflag.pos.roomName) return creep.goTo(fromflag.pos);
         let err = creep.dowithdrawAt(fromflag.pos);
