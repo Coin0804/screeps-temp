@@ -52,10 +52,20 @@ export function run_as_minekeeper(creep:Creep){
             creep.rangedAttack(cloestEnemy);
         }
         else{
-            if(creep.hits< creep.hitsMax)creep.heal(creep);
-            if(flag.pos.roomName == Game.flags['build'+team].pos.roomName){
+            let unhealthyCreeps = creep.room.find(FIND_MY_CREEPS,{
+                filter:(c) => c.hits < c.hitsMax
+            })
+
+            if(unhealthyCreeps.length){
+                let target = creep.pos.findClosestByRange(unhealthyCreeps);
+                let err = creep.heal(target);
+                if(err == ERR_NOT_IN_RANGE){
+                    creep.goTo(target.pos);
+                }
+            }else if(flag.pos.roomName == Game.flags['build'+team].pos.roomName){
                 let err = run_as_builder_out(creep)
             }
+            
         }
     }
     // if(danger.npc){

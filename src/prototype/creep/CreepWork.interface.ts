@@ -14,7 +14,7 @@ interface Creep{
     doclaim(controller:StructureController):number
     doreserve(controller:StructureController):number
     searchAndCollecte():number
-    withdrawInStorage():number
+    withdrawInStorage(floor:number):number
 
 }
 
@@ -46,7 +46,7 @@ interface CreepMemory{
     //
     withdrawAll?: boolean
     //
-    timeToSuicide?: number
+    toSuicide?: boolean
     //
     workstatus?: number
 }

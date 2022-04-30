@@ -14,7 +14,7 @@ export function run_as_upgrader_special(creep:Creep){
     if(!upgrading){
         err = creep.searchAndCollecte();
         // if(creep.name == 'E36N53_upgrader_1')console.log(err+"b");
-        if(err != OK)creep.withdrawInStorage();
+        if(err != OK)creep.withdrawInStorage(0);
         if(err == ERR_FULL|| creep.store.getFreeCapacity() == 0) upgrading = true;
     }
     creep.memory.upgrading = upgrading;

@@ -46,7 +46,7 @@ export function getOppositeDirection(direction:DirectionConstant){
 export function store2Array(store){
     let array:{resourceType:ResourceConstant,amount:number}[] = [];
     for (let resourceType in store) {
-        array.push({resourceType:resourceType as ResourceConstant,amount:store.getUsedCapacity(resourceType)});
+        if(store[resourceType] > 0)array.push({resourceType:resourceType as ResourceConstant,amount:store.getUsedCapacity(resourceType)});
     }
     return array.sort((a,b) => a.amount - b.amount);
 }

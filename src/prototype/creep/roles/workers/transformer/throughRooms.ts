@@ -25,7 +25,7 @@ export function run_as_transformer_through_rooms(creep:Creep){
         }
         return creep.goTo(toflag.pos)
     }else{
-        if(creep.memory.workstatus == 1 && creep.store.getUsedCapacity() == 0) return creep.suicide();
+        if(creep.memory.toSuicide && creep.memory.workstatus == 1 && creep.store.getUsedCapacity() == 0) return creep.suicide();
         //去搬去
         if(creep.room.name != fromflag.pos.roomName) return creep.goTo(fromflag.pos);
         let err = creep.dowithdrawAt(fromflag.pos);

@@ -20,12 +20,14 @@ export function stateScanner1() {
     let progressnow1 = Game.rooms["E36N52"].controller.progress;
     let totalProgressnow1 = Game.rooms["E36N52"].controller.progressTotal;
     if(Memory.stats1.room1prosess) Memory.stats1.room1prosessSpeed = (progressnow1 - Memory.stats1.room1prosess)/30;
+    if(!Memory.stats1.room1prosessSpeed) Memory.stats1.room1prosessSpeed = 0.001;
     Memory.stats1.room1prosess = progressnow1;
     Memory.stats1.room1prosessPersentage = (progressnow1/totalProgressnow1) * 100;
 
     let progressnow3 = Game.rooms["E43N51"].controller.progress;
     let totalProgressnow3 = Game.rooms["E43N51"].controller.progressTotal;
     if(Memory.stats1.room3prosess) Memory.stats1.room3prosessSpeed = (progressnow3 - Memory.stats1.room3prosess)/30;
+    if(!Memory.stats1.room3prosessSpeed) Memory.stats1.room3prosessSpeed = 0.001;
     Memory.stats1.room3prosess = progressnow3;
     Memory.stats1.room3prosessPersentage = (progressnow3/totalProgressnow3) * 100;
 
@@ -37,6 +39,8 @@ export function stateScanner1() {
     Memory.stats1.room1storage = storage;
     storage = Game.rooms["E37N51"].storage.store.getUsedCapacity(RESOURCE_ENERGY);
     Memory.stats1.room2storage = storage;
+    storage = Game.rooms["E43N51"].storage.store.getUsedCapacity(RESOURCE_ENERGY);
+    Memory.stats1.room4storage = storage;
     let amount = 0;
     let containers:StructureContainer[] = Game.rooms["E36N52"].find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_CONTAINER});
     containers.forEach((s) => {

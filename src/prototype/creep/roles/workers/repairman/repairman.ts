@@ -13,7 +13,7 @@ export function run_as_repairman(creep:Creep){
         }
     }
     if(!repairing){
-        err = creep.withdrawInStorage();
+        err = creep.withdrawInStorage(100);
         if(err == ERR_FULL || creep.store.getFreeCapacity() == 0) repairing = true;
     }
     creep.memory.repairing = repairing;

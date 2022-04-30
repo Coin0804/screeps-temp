@@ -30,6 +30,7 @@ export default class MoveCreep extends Creep{
     }
 
     public go(direction:DirectionConstant){
+        if (!this.memory.moveData) this.memory.moveData = {index:0};
         const moveResult = this.move(direction);
         if (moveResult != OK) return moveResult;
         // 如果ok的话，有可能撞上东西了或者一切正常
@@ -51,7 +52,7 @@ export default class MoveCreep extends Creep{
         if (!this.memory.moveData) this.memory.moveData = {index:0};
         // 确认目标没有变化，如果变化了就重新规划路线 //缓存也是
         const targetPos = target.stringify();
-        if ((targetPos !== this.memory.moveData.targetPos)|| !this.memory.moveData.path){
+        if ((targetPos !== this.memory.moveData.targetPos)|| !this.memory.moveData.path ){
             // console.log('path changed,tring again.'+this.name);
             this.memory.moveData.targetPos = targetPos;
             this.memory.moveData.path = this.findPath(target,range);

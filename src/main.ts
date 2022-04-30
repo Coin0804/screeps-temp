@@ -35,7 +35,7 @@ loadTemp1API();
  * 所以会显示报错
  * 而且不会受到垃圾邮件！
  */
-export const loop = errorMapper(() => {
+export const loop = errorMapper(() => {if(Game.shard.name == "shard3"){
     //运行时间等于当前时间减去global重置时间
     const ticks = Game.time - golbalResetTime;
     /**
@@ -62,11 +62,15 @@ export const loop = errorMapper(() => {
      * 目前每tick都推
      * TODO:之后会被孪生制取代
      */
-    if(Game.rooms["E37N52"] && Game.rooms["E37N52"].find(FIND_HOSTILE_CREEPS).length == 0){
-        checkReverser();
-        checkOuters();
-    }
+    
     checkWorkers();
+    if(Game.rooms["E37N52"] && Game.rooms["E37N52"].find(FIND_HOSTILE_CREEPS).length == 0){
+        if(Game.rooms["E38N51"] && Game.rooms["E38N51"].find(FIND_HOSTILE_CREEPS).length == 0){
+            checkReverser();
+            checkOuters();
+        }
+        
+    }
     checkMineKeeper();
     /**
      * 处理孵化任务，待优化
@@ -85,5 +89,7 @@ export const loop = errorMapper(() => {
     // 先用着吧
     runTowerDefence();
     stateScanner1();
+    if(!(Game.time%500))Game.rooms["E43N51"].terminal.send(RESOURCE_ENERGY, 3000, "E36N52");
+
     if(Game.cpu.getUsed() < 12 && !(ticks%25))autoTreadEnergy(3.5);
-});
+}});

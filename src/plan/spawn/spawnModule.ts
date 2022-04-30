@@ -1,4 +1,5 @@
 function load(creepBeBirth:CreepBeBirth,roomname?:string){
+    if(!creepBeBirth)return;
     if(creepBeBirth.number === 0 )return;
     for(let i=0;i<creepBeBirth.number;i++){
         //处理name
@@ -66,6 +67,7 @@ export function checkOuters(){
 
 export function checkReverser(){
     for(let reverser of global.outMinePlan.reversers){
+        if(!reverser) continue;
         let flag = Game.flags["colonize"+reverser.team];
         if(flag && flag.room && flag.room.controller){
             let resinfo = flag.room.controller.reservation;
@@ -88,8 +90,6 @@ export function doSpawn(){
             spawnItem = spawnlist.shift();
             const spawn = Game.rooms[spawnItem.birthroom].find(FIND_MY_SPAWNS)[spawnItem.birthSpawn?spawnItem.birthSpawn:0];
             err = spawn.spawnCreep(spawnItem.body,spawnItem.name,spawnItem.properties);
-            if(spawnItem.name == "tr_transformer_4_2")console.log(err);
-
         }
         return err;
     }

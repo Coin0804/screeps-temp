@@ -12,7 +12,7 @@ export function run_as_upgrader(creep:Creep){
         }
     }
     if(!upgrading){
-        err = creep.withdrawInStorage();
+        err = creep.withdrawInStorage(200);
         // if(creep.name == 'E36N53_upgrader_1')console.log(err+"b");
         if(err == ERR_FULL|| creep.store.getFreeCapacity() == 0) upgrading = true;
     }

@@ -18,7 +18,7 @@ function yellowFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
-        if(err != OK) err = creep.withdrawInStorage();
+        if(err != OK) err = creep.withdrawInStorage(0);
         if(err != OK) err = creep.domine();
         //todo
         if(creep.store.getFreeCapacity() == 0){
@@ -46,7 +46,7 @@ function redFarBuild(creep:Creep,flag:Flag){
     }
     if(!building){
         err = creep.searchAndCollecte();
-        if(err != OK) err = creep.withdrawInStorage();
+        if(err != OK) err = creep.withdrawInStorage(0);
         if(err != OK) err = creep.domine();
         //todo
         if(creep.store.getFreeCapacity() == 0){

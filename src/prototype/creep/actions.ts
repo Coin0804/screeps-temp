@@ -213,6 +213,7 @@ export default class Worker extends MoveCreep{
         if(err == ERR_NOT_IN_RANGE){
             err = this.goTo(source.pos);
         }
+        if(err == 0) this.memory.standed = true;
         return err;
     }
 
@@ -254,6 +255,8 @@ export default class Worker extends MoveCreep{
             //先判断要取的东西是否有，免得进行多余操作
             if(!target || target.store.getUsedCapacity(r.resourceType) <= ((r.resourceType == RESOURCE_ENERGY)?floor:0)) return ERR_NOT_ENOUGH_RESOURCES;
             err = this.withdraw(target,r.resourceType);
+            console.log(target.pos.stringify(),this.name,err,r.resourceType);
+            
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(target.pos);
             }
@@ -283,7 +286,7 @@ export default class Worker extends MoveCreep{
         //先判断背包是否已满，免得进行多余操作
         if(this.store.getFreeCapacity() <= 50) return ERR_FULL;
         let resource = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        if(resource && resource.amount > 100){
+        if(resource && resource.amount > (resource.resourceType == RESOURCE_ENERGY ? 100: 0)){
             return this.dopickup(resource);
         }else{
             let tombstone = this.pos.findClosestByRange(FIND_TOMBSTONES,{
@@ -292,7 +295,7 @@ export default class Worker extends MoveCreep{
                     }
                 });
             if(tombstone){
-                return this.dowithdraw(tombstone);
+                return this.dowithdrawAll(tombstone);
             }else{
                 let ruin = this.pos.findClosestByRange(FIND_RUINS,{
                     filter: r => {
@@ -300,10 +303,12 @@ export default class Worker extends MoveCreep{
                     }
                 });
                 if(ruin){
-                    return this.dowithdraw(ruin);
+                    let err = this.dowithdrawAll(ruin)
+                    console.log(ruin.pos.stringify(),this.name,err);
+                    return err;
                 }else{
                     let enimyStructure = this.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_TERMINAL})
-                    if(enimyStructure)return this.dowithdraw(<StructureTerminal>enimyStructure);
+                    if(enimyStructure)return this.dowithdrawAll(<StructureTerminal>enimyStructure);
 
                     return ERR_NOT_FOUND;
                 }
@@ -312,13 +317,13 @@ export default class Worker extends MoveCreep{
     }
 
 
-    withdrawInStorage(){
+    withdrawInStorage(floor:number){
         let storages:AnyStoreStructure[] = this.room.find(FIND_STRUCTURES,{filter:
-            (s) => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE)&& s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
+            (s) => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE)&& s.store.getUsedCapacity(RESOURCE_ENERGY) > floor
         });
         let storage = this.pos.findClosestByRange(storages);
         if(storage) {
-            let err = this.dowithdraw(storage);
+            let err = this.dowithdraw(storage,RESOURCE_ENERGY,floor);
             if(err == ERR_NOT_ENOUGH_RESOURCES && Game.flags[this.room.name+"onhold"]){
                 err = this.goTo(Game.flags[this.room.name+"onhold"].pos);
             }

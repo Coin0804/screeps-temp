@@ -14,6 +14,7 @@ import { run_as_upgrader_special } from "./workers/upgrader/special";
 import { run_as_miner_outer } from "./workers/miner/outter";
 import { run_as_transformer_through_rooms } from "./workers/transformer/throughRooms";
 import { run_as_minekeeper } from "./warriors/minekeeper";
+import { run_as_scout } from "./warriors/scout";
 
 const roles={
     builder:run_as_builder,
@@ -30,7 +31,8 @@ const roles={
     s_upgrader:run_as_upgrader_special,
     o_miner:run_as_miner_outer,
     tr_transformer:run_as_transformer_through_rooms,
-    minekeeper:run_as_minekeeper
+    minekeeper:run_as_minekeeper,
+    scout:run_as_scout
 }
 
 export class WorketInRole extends Worker{

@@ -18,7 +18,7 @@ export function run_as_builder(creep:Creep){
         }
     }
     if(!building){
-        err = creep.withdrawInStorage();
+        err = creep.withdrawInStorage(100);
         if(err == ERR_FULL || creep.store.getFreeCapacity() == 0) building = true;
     }
     creep.memory.building = building;
