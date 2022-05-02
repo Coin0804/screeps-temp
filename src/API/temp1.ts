@@ -2,10 +2,10 @@ import { autoTreadEnergy } from "@/tread/temp";
 
 export function loadTemp1API(){
     if(!global.API)global.API = {};
-    global.API.createColonizer = function(name:string,team = 1,spawn = "SH"){
+    global.API.createColonizer = function(name:string,team = 1,spawn = "SH2"){
         return Game.spawns[spawn].spawnCreep([CLAIM,MOVE],name,{memory:{role:"colonizer",team:team}});
     }
-    global.API.createOutBuilder = function(name:string,team = 1,spawn = "SH"){
+    global.API.createOutBuilder = function(name:string,team = 1,spawn = "SH2"){
         return Game.spawns[spawn].spawnCreep(
             [WORK,WORK,WORK,WORK,WORK,
              CARRY,CARRY,CARRY,CARRY,CARRY,
@@ -18,6 +18,18 @@ export function loadTemp1API(){
     }
     global.API.createScout = function(name:string,spawn = "FY"){
         return Game.spawns[spawn].spawnCreep([MOVE],name,{memory:{role:"scout"}});
+    }
+    global.API.createKiller = function(name:string,spawn = "SH2"){
+        return Game.spawns[spawn].spawnCreep([
+            RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,
+            MOVE,MOVE,MOVE,MOVE,MOVE
+        ],name,{memory:{role:"killer"}});
+    }
+    global.API.createEngineer = function(name:string,spawn = "SH2"){
+        return Game.spawns[spawn].spawnCreep([
+            WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+            MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE
+        ],name,{memory:{role:"engineer"}});
     }
     global.API.sellPixel = function(price:number,amount:number){
         return Game.market.createOrder({type:ORDER_SELL,resourceType:PIXEL,price:price,totalAmount:amount});

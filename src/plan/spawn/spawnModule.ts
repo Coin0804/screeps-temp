@@ -29,7 +29,7 @@ function load(creepBeBirth:CreepBeBirth,roomname?:string){
                     properties:properties
                 };
                 if(creepBeBirth.birthSpawn)spawnItem.birthSpawn = creepBeBirth.birthSpawn;
-                if(spawnItem.name == "tr_transformer_4_2")console.log(spawnItem.birthroom);
+                // if(spawnItem.name == "tr_transformer_4_2")console.log(spawnItem.birthroom);
                 spawnlist.push(spawnItem);
             }
         }else{

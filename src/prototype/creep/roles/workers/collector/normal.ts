@@ -2,7 +2,7 @@ import { run_as_builder } from "../builder/builder";
 
 
 export function run_as_collector(creep:Creep){
-    console.log(creep.name)
+    // console.log(creep.name)
     let err = creep.searchAndCollecte();
     if(err != OK){
         if(creep.store.getUsedCapacity() == 0){

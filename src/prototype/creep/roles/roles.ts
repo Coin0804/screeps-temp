@@ -15,6 +15,8 @@ import { run_as_miner_outer } from "./workers/miner/outter";
 import { run_as_transformer_through_rooms } from "./workers/transformer/throughRooms";
 import { run_as_minekeeper } from "./warriors/minekeeper";
 import { run_as_scout } from "./warriors/scout";
+import { run_as_killer } from "./warriors/killer";
+import { run_as_engineer } from "./warriors/engineer";
 
 const roles={
     builder:run_as_builder,
@@ -32,7 +34,9 @@ const roles={
     o_miner:run_as_miner_outer,
     tr_transformer:run_as_transformer_through_rooms,
     minekeeper:run_as_minekeeper,
-    scout:run_as_scout
+    scout:run_as_scout,
+    killer:run_as_killer,
+    engineer:run_as_engineer
 }
 
 export class WorketInRole extends Worker{

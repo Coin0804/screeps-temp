@@ -60,11 +60,13 @@ export function run_as_minekeeper(creep:Creep){
                 let target = creep.pos.findClosestByRange(unhealthyCreeps);
                 let err = creep.heal(target);
                 if(err == ERR_NOT_IN_RANGE){
-                    creep.goTo(target.pos);
+                    return creep.goTo(target.pos);
                 }
-            }else if(flag.pos.roomName == Game.flags['build'+team].pos.roomName){
+            }else if(flag.pos.roomName == Game.flags['build'+team].pos.roomName && creep.getActiveBodyparts(WORK) > 0){
                 let err = run_as_builder_out(creep)
+                return err
             }
+            return creep.goTo(flag.pos);
             
         }
     }

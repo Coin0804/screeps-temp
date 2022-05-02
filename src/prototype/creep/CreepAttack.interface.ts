@@ -1,0 +1,3 @@
+interface CreepMemory{
+    nextTarget?:number
+}

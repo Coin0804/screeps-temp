@@ -14,7 +14,7 @@ export function run_as_transformer_central(creep:Creep){
     if(link.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
         err = creep.dowithdraw(link);
     }
-    console.log(err,creep.name);
+    // console.log(err,creep.name);
     if(terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 5000){
         if(creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
             return creep.dostore(terminal);

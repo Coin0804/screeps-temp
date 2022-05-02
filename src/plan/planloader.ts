@@ -215,7 +215,7 @@ export const plan1:Plan = {
                 },
                 {
                     rolename: "builder",
-                    number: 0,
+                    number: 1,
                     body: [
                         WORK, WORK, WORK, WORK, WORK, WORK,
                         CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
@@ -446,6 +446,17 @@ export const outMinePlan1:OutMinePlan = {
                 HEAL                
             ]
         }
+        // ,{
+        //     rolename:'minekeeper',
+        //     birthroom:'E37N51',
+        //     number:1,
+        //     team:4,
+        //     body:[
+        //         MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,
+        //         RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,
+        //         HEAL                
+        //     ]
+        // }
     ]
 
 

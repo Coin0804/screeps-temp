@@ -255,7 +255,7 @@ export default class Worker extends MoveCreep{
             //先判断要取的东西是否有，免得进行多余操作
             if(!target || target.store.getUsedCapacity(r.resourceType) <= ((r.resourceType == RESOURCE_ENERGY)?floor:0)) return ERR_NOT_ENOUGH_RESOURCES;
             err = this.withdraw(target,r.resourceType);
-            console.log(target.pos.stringify(),this.name,err,r.resourceType);
+            // console.log(target.pos.stringify(),this.name,err,r.resourceType);
             
             if(err == ERR_NOT_IN_RANGE){
                 err = this.goTo(target.pos);
@@ -304,7 +304,7 @@ export default class Worker extends MoveCreep{
                 });
                 if(ruin){
                     let err = this.dowithdrawAll(ruin)
-                    console.log(ruin.pos.stringify(),this.name,err);
+                    // console.log(ruin.pos.stringify(),this.name,err);
                     return err;
                 }else{
                     let enimyStructure = this.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_TERMINAL})

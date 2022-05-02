@@ -14,6 +14,10 @@ interface Creep{
     go(direction: DirectionConstant): CreepMoveReturnCode | ERR_INVALID_TARGET
 }
 
+interface Memory{
+    bypassRooms:Array<string>
+}
+
 /* 爬虫移动记忆 */
 interface CreepMemory{
     // 爬虫移动数据
